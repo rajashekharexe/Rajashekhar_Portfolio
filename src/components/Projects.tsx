@@ -81,7 +81,7 @@ const ProjectRow = ({ project, index }: { project: any, index: number }) => {
           {project.title}
         </h3>
         {project.subtitle && (
-          <span className="block text-lg font-medium text-neutral-400 italic mb-6">
+          <span className="block text-lg font-black text-black italic mb-6">
             {project.subtitle}
           </span>
         )}
