@@ -32,13 +32,13 @@ function AmorphousBlob() {
       <mesh ref={meshRef} scale={1.5}>
         <icosahedronGeometry args={[4, 60]} />
         <MeshDistortMaterial
-          color="#ffffff"
-          envMapIntensity={1}
+          color="#333333"
+          envMapIntensity={2.5}
           clearcoat={1}
-          clearcoatRoughness={0}
-          metalness={0.1}
+          clearcoatRoughness={0.1}
+          metalness={0.9}
           roughness={0.1}
-          distort={0.4}
+          distort={0.5}
           speed={2}
         />
       </mesh>
@@ -48,9 +48,9 @@ function AmorphousBlob() {
 
 export function FluidBackground() {
   return (
-    <div className="fixed inset-0 z-[-1] pointer-events-none opacity-30 mix-blend-multiply">
+    <div className="fixed inset-0 z-[-1] pointer-events-none opacity-60">
       <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-        <Environment preset="studio" />
+        <Environment preset="city" />
         <ambientLight intensity={1.5} />
         <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
         <directionalLight position={[-10, -10, -5]} intensity={1} color="#e5e5e5" />

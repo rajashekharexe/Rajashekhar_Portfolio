@@ -23,8 +23,8 @@ function App() {
       <ScrollProgress />
       <Spotlight />
       <Cursor />
+      <FluidBackground />
       <SmoothScroll>
-        <FluidBackground />
         <main className={`min-h-screen text-foreground font-sans ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100 transition-opacity duration-1000'}`}>
           <Navbar />
           <Hero />
