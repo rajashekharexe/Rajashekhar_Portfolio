@@ -28,40 +28,51 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     <div className="fixed inset-0 z-[10000] pointer-events-none flex flex-col">
       {/* Top Half of the Vault */}
       <motion.div 
-        className="w-full h-[50vh] bg-black flex items-end justify-center overflow-hidden"
+        className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: progress === 100 ? "-100%" : 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
-      >
-        {/* Text is cut in half by absolute positioning relative to screen center */}
-        <div className="absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black text-5xl md:text-[8rem] uppercase tracking-tighter text-white overflow-hidden whitespace-nowrap">
-          <div className="relative">
-            RAJASHEKHAR
-            <motion.div 
-              className="absolute inset-0 bg-white mix-blend-difference origin-left"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: progress / 100 }}
-              transition={{ duration: 0.1 }}
-            />
-          </div>
-        </div>
-      </motion.div>
-
+        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+      />
+      
       {/* Bottom Half of the Vault */}
       <motion.div 
-        className="w-full h-[50vh] bg-black flex items-start justify-center overflow-hidden relative"
+        className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: progress === 100 ? "100%" : 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
+        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+      />
+
+      {/* Loading Percentage Number */}
+      <div className="absolute bottom-12 right-12 font-bold text-2xl font-display tracking-widest overflow-hidden text-white z-[10001]">
+        <motion.div
+           initial={{ y: "100%" }}
+           animate={{ y: progress === 100 ? "100%" : 0 }}
+           transition={{ duration: 0.3 }}
+        >
+          {Math.min(progress, 100)}%
+        </motion.div>
+      </div>
+
+      {/* Centered Typography Mask */}
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[10001]"
+        initial={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: progress === 100 ? 0 : 1, 
+          scale: progress === 100 ? 1.05 : 1,
+          filter: progress === 100 ? "blur(10px)" : "blur(0px)" 
+        }}
+        transition={{ duration: 0.4, ease: "easeIn" }}
       >
-        <div className="absolute bottom-12 right-12 font-bold text-2xl font-display tracking-widest overflow-hidden text-white">
-          <motion.div
-             initial={{ y: "100%" }}
-             animate={{ y: progress === 100 ? "100%" : 0 }}
-             transition={{ duration: 0.4 }}
-          >
-            {Math.min(progress, 100)}%
-          </motion.div>
+        <div className="font-display font-black text-5xl md:text-[8rem] uppercase tracking-tighter text-white whitespace-nowrap relative">
+          RAJASHEKHAR
+          
+          <motion.div 
+            className="absolute inset-0 bg-white mix-blend-difference origin-left"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: progress / 100 }}
+            transition={{ duration: 0.1 }}
+          />
         </div>
       </motion.div>
     </div>
