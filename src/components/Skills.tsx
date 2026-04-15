@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 
 const CHARS = '!<>-_/[]{}—=+*^?#_';
 
@@ -20,7 +20,7 @@ function ScrambleText({ text }: { text: string }) {
       
       ref.current.innerText = text
         .split("")
-        .map((letter, index) => {
+        .map((_, index) => {
           if (index < iteration) {
             return text[index];
           }
