@@ -35,8 +35,8 @@ export function Hero() {
           {/* Left Column (Huge Text + Bio) */}
           <div className="col-span-12 md:col-span-6 lg:col-span-5 flex flex-col justify-between">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <h1 className="text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-6">
@@ -53,8 +53,8 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="mt-12 md:mt-0"
             >
@@ -73,8 +73,8 @@ export function Hero() {
           <div className="col-span-12 md:col-span-5 md:col-start-8 lg:col-span-5 lg:col-start-8 flex flex-col justify-between pt-16 pb-12 z-20">
             
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl"
             >
@@ -83,8 +83,8 @@ export function Hero() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl mt-12 md:mt-0"
             >

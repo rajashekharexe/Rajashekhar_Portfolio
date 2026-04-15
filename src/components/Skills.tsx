@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { useRef } from 'react'
 
 export function Skills() {
@@ -9,12 +9,16 @@ export function Skills() {
     offset: ["start end", "end start"]
   })
 
-  // Aggressive parallax effects for a luxurious, immersive feel
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"])
-  const imgScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 1.05])
+  // Aggressive parallax effects with inertial spring dampers for a luxurious feel
+  const rawImgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"])
+  const imgY = useSpring(rawImgY, { stiffness: 100, damping: 30, restDelta: 0.001 })
   
-  // Massive background text that scrolls horizontally as you scroll down
-  const bgX = useTransform(scrollYProgress, [0, 1], ["10%", "-50%"])
+  const rawImgScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 1.05])
+  const imgScale = useSpring(rawImgScale, { stiffness: 100, damping: 30, restDelta: 0.001 })
+  
+  // Massive background text that scrolls horizontally
+  const rawBgX = useTransform(scrollYProgress, [0, 1], ["10%", "-50%"])
+  const bgX = useSpring(rawBgX, { stiffness: 100, damping: 30, restDelta: 0.001 })
 
   const skills = [
     { category: "Core Languages", items: ["C", "Python", "TypeScript", "JavaScript"] },
@@ -58,7 +62,16 @@ export function Skills() {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
               <h2 className="text-[3.5rem] md:text-[5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-8 text-neutral-900">
-                Technical <br/> Arsenal
+                <span className="flex overflow-hidden">
+                  {"Technical".split("").map((char, index) => (
+                    <motion.span key={`t-${index}`} initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }} whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true, margin: "-100px"}} transition={{ duration: 0.7, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}>{char}</motion.span>
+                  ))}
+                </span>
+                <span className="flex overflow-hidden mt-1">
+                  {"Arsenal".split("").map((char, index) => (
+                    <motion.span key={`a-${index}`} initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }} whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true, margin: "-100px"}} transition={{ duration: 0.7, delay: 0.3 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}>{char}</motion.span>
+                  ))}
+                </span>
               </h2>
               
               <p className="text-lg text-neutral-600 font-medium mb-12 max-w-md leading-relaxed">
