@@ -12,7 +12,6 @@ import { Cursor } from './components/Cursor'
 import { Spotlight } from './components/Spotlight'
 import { ScrollProgress } from './components/ScrollProgress'
 import { VelocityMarquee } from './components/VelocityMarquee'
-import { FluidBackground } from './components/FluidBackground'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -23,13 +22,12 @@ function App() {
       <ScrollProgress />
       <Spotlight />
       <Cursor />
-      <FluidBackground />
       <SmoothScroll>
-        <main className={`min-h-screen text-foreground font-sans ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100 transition-opacity duration-1000'}`}>
+        <main className={`bg-background min-h-screen text-foreground font-sans ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100 transition-opacity duration-1000'}`}>
           <Navbar />
           <Hero />
           
-          <div className="relative z-10 w-full overflow-hidden">
+          <div className="bg-background relative z-10 w-full overflow-hidden">
             <VelocityMarquee baseVelocity={-2}>Software Engineer</VelocityMarquee>
             <VelocityMarquee baseVelocity={2}>Creative Developer</VelocityMarquee>
           </div>

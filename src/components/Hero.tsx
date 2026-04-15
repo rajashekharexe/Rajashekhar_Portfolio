@@ -13,7 +13,7 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen pt-32 pb-20 px-8 overflow-hidden z-10">
+    <section ref={containerRef} className="relative min-h-screen bg-background pt-32 pb-20 px-8 overflow-hidden">
       <div className="max-w-[1400px] mx-auto min-h-[80vh] relative flex items-center">
         
         {/* The Image (Centered / slightly pulled right, behind text) */}

@@ -150,7 +150,7 @@ export function Projects() {
   const bgSkew = useTransform(scrollYProgress, [0, 1], [15, -25])
 
   return (
-    <section id="projects" ref={containerRef} className="py-32 md:py-48 relative overflow-hidden text-neutral-900 border-t border-neutral-900/10" style={{ perspective: "1500px" }}>
+    <section id="projects" ref={containerRef} className="py-32 md:py-48 bg-white relative overflow-hidden text-neutral-900 border-t border-neutral-100" style={{ perspective: "1500px" }}>
       
       {/* Immersive 3D Background Typography */}
       <motion.div 

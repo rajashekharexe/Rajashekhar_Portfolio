@@ -67,7 +67,7 @@ export function Skills() {
   ]
 
   return (
-    <section id="skills" ref={containerRef} className="relative py-32 px-8 overflow-hidden z-10">
+    <section id="skills" ref={containerRef} className="relative py-32 px-8 bg-white overflow-hidden">
       
       {/* Immersive Background Typography */}
       <motion.div 
