@@ -4,6 +4,7 @@ import { useRef } from 'react'
 const projects = [
   {
     title: "SkillForge AI",
+    subtitle: "(in collaboration with Abhishek Pattar)",
     description: "An immersive, award-winning 3D web platform offering a complete AI Career OS. Features seamless neural network environments and fully integrated generative study tools.",
     tech: ["React Three Fiber", "AI APIs", "GSAP"],
     image: "/project-1.png"
@@ -76,9 +77,14 @@ const ProjectRow = ({ project, index }: { project: any, index: number }) => {
         className={`lg:col-span-5 flex flex-col justify-center relative z-10 px-4 lg:px-0 mt-20 lg:mt-0 ${!isEven ? 'lg:order-2 lg:items-end lg:text-right' : 'lg:order-1'}`}
       >
         <span className="text-4xl font-display font-black text-neutral-300 mb-4 block">0{index + 1} //</span>
-        <h3 className="text-4xl md:text-[3.5rem] leading-none font-display font-black uppercase tracking-tight mb-6">
+        <h3 className="text-4xl md:text-[3.5rem] leading-none font-display font-black uppercase tracking-tight mb-2">
           {project.title}
         </h3>
+        {project.subtitle && (
+          <span className="block text-lg font-medium text-neutral-400 italic mb-6">
+            {project.subtitle}
+          </span>
+        )}
         <p className="text-xl text-neutral-600 font-medium mb-12 leading-relaxed max-w-md">
           {project.description}
         </p>
