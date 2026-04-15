@@ -120,7 +120,8 @@ const ProjectRow = ({ project, index }: { project: any, index: number }) => {
             whileInView={{ clipPath: "inset(0 0 0 0)" }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full flex justify-center items-center"
+            className="w-full flex justify-center items-center cursor-none"
+            data-cursor-text="VIEW"
           >
             <motion.img 
               animate={floatingAnimation}

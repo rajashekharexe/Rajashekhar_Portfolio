@@ -1,5 +1,45 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+
+const CHARS = '!<>-_/[]{}—=+*^?#_';
+
+function ScrambleText({ text }: { text: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (!isInView) return;
+    
+    let iteration = 0;
+    let interval: any = null;
+
+    clearInterval(interval);
+    
+    interval = setInterval(() => {
+      if (!ref.current) return;
+      
+      ref.current.innerText = text
+        .split("")
+        .map((letter, index) => {
+          if (index < iteration) {
+            return text[index];
+          }
+          return CHARS[Math.floor(Math.random() * CHARS.length)];
+        })
+        .join("");
+      
+      if (iteration >= text.length) { 
+        clearInterval(interval);
+      }
+      
+      iteration += 1 / 3; 
+    }, 30);
+    
+    return () => clearInterval(interval);
+  }, [isInView, text]);
+
+  return <motion.span ref={ref} className="inline-block relative">{text}</motion.span>;
+}
 
 export function Skills() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -62,16 +102,12 @@ export function Skills() {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
               <h2 className="text-[3.5rem] md:text-[5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-8 text-neutral-900">
-                <span className="flex overflow-hidden">
-                  {"Technical".split("").map((char, index) => (
-                    <motion.span key={`t-${index}`} initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }} whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true, margin: "-100px"}} transition={{ duration: 0.7, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}>{char}</motion.span>
-                  ))}
-                </span>
-                <span className="flex overflow-hidden mt-1">
-                  {"Arsenal".split("").map((char, index) => (
-                    <motion.span key={`a-${index}`} initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }} whileInView={{ y: 0, opacity: 1, filter: "blur(0px)" }} viewport={{ once: true, margin: "-100px"}} transition={{ duration: 0.7, delay: 0.3 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}>{char}</motion.span>
-                  ))}
-                </span>
+                <div className="flex overflow-hidden">
+                  <ScrambleText text="Technical" />
+                </div>
+                <div className="flex overflow-hidden mt-1">
+                  <ScrambleText text="Arsenal" />
+                </div>
               </h2>
               
               <p className="text-lg text-neutral-600 font-medium mb-12 max-w-md leading-relaxed">

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 export function Cursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
+  const [cursorText, setCursorText] = useState("")
 
   useEffect(() => {
     // Only enable custom cursor on non-touch devices
@@ -23,7 +24,14 @@ export function Cursor() {
         target.closest('a') !== null ||
         target.closest('button') !== null
 
-      setIsHovering(isClickable)
+      const customTextTarget = target.closest('[data-cursor-text]') as HTMLElement
+      if (customTextTarget) {
+        setCursorText(customTextTarget.dataset.cursorText || "")
+        setIsHovering(true)
+      } else {
+        setCursorText("")
+        setIsHovering(isClickable)
+      }
     }
 
     window.addEventListener('mousemove', updateMousePosition)
@@ -49,16 +57,27 @@ export function Cursor() {
       
       {/* High-Contrast Awwwards Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[10000]"
+        className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[10000] flex items-center justify-center overflow-hidden"
         style={{ mixBlendMode: 'difference' }}
         animate={{
           x: mousePosition.x - 8,
           y: mousePosition.y - 8,
-          scale: isHovering ? 6 : 1,
+          scale: cursorText ? 10 : (isHovering ? 6 : 1),
           opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
         }}
         transition={{ type: 'spring', stiffness: 400, damping: 28, mass: 0.1 }}
-      />
+      >
+        {cursorText && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            style={{ mixBlendMode: 'normal' }}
+            className="text-[1.5px] font-black tracking-widest text-black uppercase"
+          >
+            {cursorText}
+          </motion.div>
+        )}
+      </motion.div>
     </>
   )
 }
