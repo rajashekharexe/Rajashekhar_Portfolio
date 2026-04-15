@@ -115,12 +115,20 @@ const ProjectRow = ({ project, index }: { project: any, index: number }) => {
           }}
           className="w-full relative mix-blend-multiply flex justify-center items-center"
         >
-          <motion.img 
-            animate={floatingAnimation}
-            src={project.image} 
-            alt={project.title}
-            className="w-full md:w-[90%] h-auto object-contain brightness-[1.05] contrast-[1.15] grayscale-[15%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-          />
+          <motion.div
+            initial={{ clipPath: "inset(100% 0 0 0)" }}
+            whileInView={{ clipPath: "inset(0 0 0 0)" }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full flex justify-center items-center"
+          >
+            <motion.img 
+              animate={floatingAnimation}
+              src={project.image} 
+              alt={project.title}
+              className="w-full md:w-[90%] h-auto object-contain brightness-[1.05] contrast-[1.15] grayscale-[15%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+            />
+          </motion.div>
         </motion.div>
       </div>
 

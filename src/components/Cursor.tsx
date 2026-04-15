@@ -46,31 +46,18 @@ export function Cursor() {
           * { cursor: none !important; }
         }
       `}</style>
-
-      {/* Outer Trailing Glass Ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border-[1.5px] border-neutral-400/50 bg-white/5 backdrop-blur-[2px] rounded-full pointer-events-none z-[9998] flex items-center justify-center"
-        animate={{
-          x: mousePosition.x - 24,
-          y: mousePosition.y - 24,
-          scale: isHovering ? 1.5 : 1,
-          opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
-        }}
-        transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.2 }}
-      />
       
-      {/* Inner Sharp Dot */}
+      {/* High-Contrast Awwwards Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-neutral-800 rounded-full pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[10000]"
         style={{ mixBlendMode: 'difference' }}
         animate={{
-          x: mousePosition.x - 5,
-          y: mousePosition.y - 5,
-          scale: isHovering ? 0 : 1,
-          backgroundColor: isHovering ? "white" : "white",
+          x: mousePosition.x - 8,
+          y: mousePosition.y - 8,
+          scale: isHovering ? 6 : 1,
           opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
         }}
-        transition={{ type: 'spring', stiffness: 1000, damping: 28, mass: 0.1 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 28, mass: 0.1 }}
       />
     </>
   )
