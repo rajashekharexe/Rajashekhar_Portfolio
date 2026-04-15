@@ -9,7 +9,6 @@ import { Experience } from './components/Experience'
 import { Contact } from './components/Contact'
 import { Preloader } from './components/Preloader'
 import { Cursor } from './components/Cursor'
-import { Grain } from './components/Grain'
 import { Spotlight } from './components/Spotlight'
 import { ScrollProgress } from './components/ScrollProgress'
 import { VelocityMarquee } from './components/VelocityMarquee'
@@ -22,7 +21,6 @@ function App() {
       {loading && <Preloader onComplete={() => setLoading(false)} />}
       <ScrollProgress />
       <Spotlight />
-      <Grain />
       <Cursor />
       <SmoothScroll>
         <main className={`bg-background min-h-screen text-foreground font-sans ${loading ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100 transition-opacity duration-1000'}`}>
