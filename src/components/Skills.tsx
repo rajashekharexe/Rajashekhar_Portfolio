@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
 import { useRef, useEffect } from 'react'
 
-const CHARS = '!<>-_/[]{}—=+*^?#_';
+const CHARS = '#';
 
 function ScrambleText({ text }: { text: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -10,7 +10,7 @@ function ScrambleText({ text }: { text: string }) {
   useEffect(() => {
     if (!isInView) return;
     
-    let iteration = 0;
+    let iteration = -5;
     let interval: any = null;
 
     clearInterval(interval);
