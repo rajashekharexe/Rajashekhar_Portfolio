@@ -5,17 +5,14 @@ const CHARS = '#';
 
 function ScrambleText({ text }: { text: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   useEffect(() => {
     if (!isInView) return;
     
-    let iteration = -5;
-    let interval: any = null;
-
-    clearInterval(interval);
+    let iteration = 0;
     
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (!ref.current) return;
       
       ref.current.innerText = text
@@ -24,21 +21,23 @@ function ScrambleText({ text }: { text: string }) {
           if (index < iteration) {
             return text[index];
           }
-          return CHARS[Math.floor(Math.random() * CHARS.length)];
+          return '#';
         })
         .join("");
       
       if (iteration >= text.length) { 
         clearInterval(interval);
+        ref.current.innerText = text; // ensure final state
       }
       
-      iteration += 1 / 3; 
-    }, 30);
+      iteration += 1 / 2; // Speed up the hash conversion slightly
+    }, 50); // 50ms per tick for a stable matrix visual
     
     return () => clearInterval(interval);
   }, [isInView, text]);
 
-  return <motion.span ref={ref} className="inline-block relative">{text}</motion.span>;
+  // Start with hashes so it's not pre-solved before scrolling into view!
+  return <motion.span ref={ref} className="inline-block relative">{text.replace(/./g, '#')}</motion.span>;
 }
 
 export function Skills() {
