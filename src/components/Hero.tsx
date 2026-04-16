@@ -13,7 +13,7 @@ export function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen bg-background pt-32 pb-20 px-8 overflow-hidden">
+    <section id="about" ref={containerRef} className="relative min-h-screen bg-background pt-32 pb-20 px-8 overflow-hidden">
       <div className="max-w-[1400px] mx-auto min-h-[80vh] relative flex items-center">
         
         {/* The Image (Centered / slightly pulled right, behind text) */}
@@ -61,10 +61,10 @@ export function Hero() {
               <p className="text-sm font-medium text-foreground/70 max-w-[280px] mb-6 leading-relaxed">
                 I'm a Full-Stack Software Engineer specializing in React, TypeScript, and Node.js. I build complete web ecosystems—from fluid frontend interfaces to resilient backend architectures.
               </p>
-              <div className="flex space-x-6 text-foreground/80 font-semibold text-sm">
-                <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
-                <a href="#" className="hover:text-primary transition-colors">GitHub</a>
-                <a href="#" className="hover:text-primary transition-colors">Email</a>
+              <div className="flex items-center flex-wrap gap-6 text-foreground/80 font-semibold text-sm">
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground px-6 py-3 rounded-full hover:bg-neutral-800 transition-colors uppercase tracking-widest text-[10px] md:text-xs">Download Resume</a>
+                <a href="https://linkedin.com/in/rajashekhar" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
+                <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
               </div>
             </motion.div>
           </div>

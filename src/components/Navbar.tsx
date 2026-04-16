@@ -37,7 +37,7 @@ export function Navbar() {
 
       <div className="flex items-center space-x-6 text-sm font-medium">
         <MagneticButton>
-          <a href="https://github.com/Rajashekhar" target="_blank" className="hidden sm:block hover:text-gray-300 transition-colors p-2">GitHub</a>
+          <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="hidden sm:block hover:text-gray-300 transition-colors p-2">GitHub</a>
         </MagneticButton>
       </div>
     </motion.nav>

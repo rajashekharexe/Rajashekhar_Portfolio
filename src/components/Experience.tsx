@@ -34,10 +34,10 @@ export function Experience() {
       id="experience" 
       ref={containerRef} 
       onMouseMove={handleMouseMove}
-      className="py-32 md:py-48 px-8 bg-neutral-900 text-white relative overflow-hidden"
+      className="py-32 px-8 bg-neutral-50 relative overflow-hidden"
     >
       
-      {/* Background Typography - Dark mode base layer */}
+      {/* Dynamic line tracing exactly through the timeline */}
       <motion.div 
         style={{ x: bgX }} 
         className="absolute top-[10%] left-0 whitespace-nowrap pointer-events-none select-none z-0"
