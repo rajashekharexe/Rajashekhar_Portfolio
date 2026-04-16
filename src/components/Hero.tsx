@@ -45,7 +45,7 @@ export function Hero() {
                 <ScrambleText text="Software" />
               </h1>
               
-              <p className="text-xl md:text-2xl font-medium text-foreground/80 mb-8 max-w-sm leading-tight">
+              <p className="text-xl md:text-2xl font-medium text-black mb-8 max-w-sm leading-tight">
                 Robust full-stack development that drives performance and scales securely.
               </p>
 
@@ -58,10 +58,10 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="mt-12 md:mt-0"
             >
-              <p className="text-sm font-medium text-foreground/70 max-w-[280px] mb-6 leading-relaxed">
+              <p className="text-sm font-medium text-black max-w-[280px] mb-6 leading-relaxed">
                 I'm a Full-Stack Software Engineer specializing in React, TypeScript, and Node.js. I build complete web ecosystems—from fluid frontend interfaces to resilient backend architectures.
               </p>
-              <div className="flex items-center flex-wrap gap-6 text-foreground/80 font-semibold text-sm">
+              <div className="flex items-center flex-wrap gap-6 text-black font-semibold text-sm">
                 <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="bg-primary text-primary-foreground px-6 py-3 rounded-full hover:bg-neutral-800 transition-colors uppercase tracking-widest text-[10px] md:text-xs">Download Resume</a>
                 <a href="https://linkedin.com/in/rajashekhar" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
                 <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
@@ -79,7 +79,7 @@ export function Hero() {
               className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl"
             >
               <h3 className="font-display font-black text-4xl md:text-5xl uppercase leading-[0.9] tracking-tight mb-4 text-foreground">Full-Stack<br/>Developer</h3>
-              <p className="text-sm md:text-base text-foreground/80 font-medium leading-relaxed">Architecting robust solutions with React, Tailwind, Express, and modern databases.</p>
+              <p className="text-sm md:text-base text-black font-medium leading-relaxed">Architecting robust solutions with React, Tailwind, Express, and modern databases.</p>
             </motion.div>
 
             <motion.div
@@ -89,7 +89,7 @@ export function Hero() {
               className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl mt-12 md:mt-0"
             >
               <h3 className="font-display font-black text-4xl md:text-5xl uppercase leading-[0.9] tracking-tight mb-4 text-foreground">Production<br/>Ready</h3>
-              <p className="text-sm md:text-base text-foreground/80 font-medium leading-relaxed">Writing clean, maintainable code optimized for high performance and seamless deployment.</p>
+              <p className="text-sm md:text-base text-black font-medium leading-relaxed">Writing clean, maintainable code optimized for high performance and seamless deployment.</p>
             </motion.div>
 
           </div>
