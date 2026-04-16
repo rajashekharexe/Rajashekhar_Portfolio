@@ -6,6 +6,7 @@ import { SmoothScroll } from './components/SmoothScroll'
 import { Skills } from './components/Skills'
 import { Projects } from './components/Projects'
 import { GitHubStats } from './components/GitHubStats'
+import { Terminal } from './components/Terminal'
 import { Experience } from './components/Experience'
 import { Contact } from './components/Contact'
 import { Preloader } from './components/Preloader'
@@ -37,6 +38,7 @@ function App() {
           <Skills />
           <Projects />
           <GitHubStats />
+          <Terminal />
           <Experience />
           <Contact />
         </main>

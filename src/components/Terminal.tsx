@@ -62,13 +62,30 @@ export function Terminal() {
   }
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.5 }}
-      onClick={() => inputRef.current?.focus()}
-      className="w-full max-w-md bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-text mt-8 relative"
-    >
+    <section className="py-24 px-8 border-t border-neutral-100 flex flex-col items-center justify-center bg-neutral-50/50">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-12"
+      >
+        <h2 className="text-[2.5rem] md:text-[4rem] font-display font-black uppercase leading-[0.9] tracking-tight mb-4 text-neutral-900">
+          Command <br /> Center
+        </h2>
+        <p className="text-neutral-500 font-medium max-w-sm mx-auto">
+          Interact directly with the system. Type 'help' to begin.
+        </p>
+      </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        onClick={() => inputRef.current?.focus()}
+        className="w-full max-w-3xl bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow cursor-text"
+      >
       {/* Mac-style Window Header */}
       <div className="flex items-center px-4 py-3 bg-neutral-50/80 border-b border-neutral-200">
         <div className="flex gap-2">
@@ -112,6 +129,7 @@ export function Terminal() {
           <div ref={bottomRef} />
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </section>
   )
 }
