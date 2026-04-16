@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { ScrambleText } from './ScrambleText'
-import { Terminal } from './Terminal'
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -59,12 +58,9 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="mt-12 md:mt-0"
             >
-              <p className="text-sm font-medium text-foreground/70 max-w-[280px] mb-6 leading-relaxed hidden lg:block">
+              <p className="text-sm font-medium text-foreground/70 max-w-[280px] mb-6 leading-relaxed">
                 I'm a Full-Stack Software Engineer specializing in React, TypeScript, and Node.js. I build complete web ecosystems—from fluid frontend interfaces to resilient backend architectures.
               </p>
-              
-              {/* Interactive Terminal */}
-              <Terminal />
               <div className="flex space-x-6 text-foreground/80 font-semibold text-sm">
                 <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
                 <a href="#" className="hover:text-primary transition-colors">GitHub</a>
