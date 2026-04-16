@@ -5,6 +5,7 @@ import { LogoTicker } from './components/LogoTicker'
 import { SmoothScroll } from './components/SmoothScroll'
 import { Skills } from './components/Skills'
 import { Projects } from './components/Projects'
+import { GitHubStats } from './components/GitHubStats'
 import { Experience } from './components/Experience'
 import { Contact } from './components/Contact'
 import { Preloader } from './components/Preloader'
@@ -35,6 +36,7 @@ function App() {
           <LogoTicker />
           <Skills />
           <Projects />
+          <GitHubStats />
           <Experience />
           <Contact />
         </main>

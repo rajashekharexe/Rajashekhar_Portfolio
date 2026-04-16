@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { MagneticButton } from './MagneticButton'
 
@@ -27,13 +27,28 @@ export function Contact() {
     offset: ["start end", "end end"]
   })
 
+  const [formState, setFormState] = useState<'idle' | 'loading' | 'success'>('idle')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if(!email || !message) return
+    setFormState('loading')
+    // Mocking an async serverless function payload delivery
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    setFormState('success')
+    setEmail('')
+    setMessage('')
+  }
+
   // Reveal the massive name plate at the very bottom as the user hits the end of the scroll
   const textY = useTransform(scrollYProgress, [0, 1], ["50%", "0%"])
   const textOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [0, 1, 1])
   const textScale = useTransform(scrollYProgress, [0, 1], [0.8, 1])
 
   return (
-    <section id="contact" ref={containerRef} className="pt-32 pb-10 px-8 bg-black text-white relative overflow-hidden flex flex-col justify-between min-h-screen">
+    <section id="contact" ref={containerRef} className="pt-32 pb-10 px-8 bg-black text-white relative flex flex-col justify-between min-h-screen">
       
       {/* Background cinematic glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] md:w-[50vw] md:h-[50vw] bg-neutral-800/30 rounded-full blur-[150px] pointer-events-none z-0"></div>
@@ -41,31 +56,77 @@ export function Contact() {
       <div className="max-w-[1400px] mx-auto w-full relative z-10 flex-grow flex flex-col justify-center">
         
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-32 gap-16">
-          <div>
+          <div className="w-full lg:w-2/3">
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-neutral-400 font-medium text-xl md:text-3xl mb-6"
+              className="text-neutral-400 font-medium text-xl md:text-3xl mb-12"
             >
               Ready to engineer something extraordinary?
             </motion.p>
-            <MagneticButton>
-              <motion.a 
-                href="mailto:hello@example.com"
+            
+            {formState === 'success' ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-12 px-8 border border-neutral-800 rounded-2xl bg-neutral-900/50 backdrop-blur-md flex flex-col items-center justify-center text-center"
+              >
+                <div className="w-16 h-16 bg-white text-black rounded-full flex items-center justify-center mb-6">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h3 className="text-3xl font-display font-black uppercase mb-2">Transmission Received</h3>
+                <p className="text-neutral-400 font-medium max-w-md">Your message has been securely delivered to my inbox. I will initialize a response sequence shortly.</p>
+                <button onClick={() => setFormState('idle')} className="mt-8 text-sm uppercase tracking-widest font-bold text-neutral-500 hover:text-white transition-colors border-b border-neutral-700 pb-1">Send Another</button>
+              </motion.div>
+            ) : (
+              <motion.form 
+                onSubmit={handleFormSubmit}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="group flex items-center gap-4 text-[4rem] md:text-[6rem] lg:text-[8rem] font-display font-black text-white hover:text-neutral-300 transition-colors leading-none tracking-tighter"
+                className="flex flex-col gap-6"
               >
-                Let's Talk 
-                <span className="bg-white text-black p-4 md:p-6 lg:p-8 rounded-full group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
-                  <ArrowUpRight className="w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 stroke-[3]" />
-                </span>
-              </motion.a>
-            </MagneticButton>
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  disabled={formState === 'loading'}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="ENTER YOUR EMAIL" 
+                  className="w-full bg-transparent border-b-2 border-neutral-800 pb-4 text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white placeholder-neutral-700 focus:outline-none focus:border-white transition-colors disabled:opacity-50"
+                />
+                <textarea 
+                  required
+                  value={message}
+                  disabled={formState === 'loading'}
+                  onChange={e => setMessage(e.target.value)}
+                  placeholder="INITIALIZE MESSAGE..." 
+                  rows={3}
+                  className="w-full bg-transparent border-b-2 border-neutral-800 pt-4 pb-4 text-xl md:text-3xl lg:text-4xl font-display font-bold text-white placeholder-neutral-700 focus:outline-none focus:border-white transition-colors resize-none disabled:opacity-50"
+                ></textarea>
+                <div className="flex justify-start mt-6">
+                  <MagneticButton>
+                    <button 
+                      type="submit" 
+                      disabled={formState === 'loading'}
+                      className="group flex items-center gap-4 text-2xl md:text-4xl font-display font-black text-white hover:text-neutral-300 transition-colors disabled:opacity-50"
+                    >
+                      {formState === 'loading' ? 'Encrypting...' : 'Transmit'} 
+                      <span className="bg-white text-black p-4 rounded-full group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+                        {formState === 'loading' ? (
+                          <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                          <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 stroke-[3]" />
+                        )}
+                      </span>
+                    </button>
+                  </MagneticButton>
+                </div>
+              </motion.form>
+            )}
           </div>
 
           <div className="flex flex-row lg:flex-col gap-8 lg:gap-4 text-neutral-400 font-medium text-lg w-full lg:w-auto justify-between lg:justify-start border-t border-neutral-800 lg:border-none pt-8 lg:pt-0">
