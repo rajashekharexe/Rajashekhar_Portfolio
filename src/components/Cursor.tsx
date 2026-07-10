@@ -1,19 +1,48 @@
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
+/**
+ * Custom Cursor Component
+ * 
+ * WHAT IT DOES:
+ * Hides the default computer mouse cursor and replaces it with a custom white dot and a trailing ring.
+ * The cursor also changes color dynamically depending on what background it is hovering over (using mix-blend-difference).
+ * 
+ * HOW IT WORKS:
+ * We use a `requestAnimationFrame` loop to continuously update the position of the custom cursor `div`s.
+ * The outer ring uses "Lerp" (Linear Interpolation) physics to follow the inner dot smoothly with a slight delay.
+ * 
+ * INSTRUCTOR NOTE / HOW TO MODIFY:
+ * - If sir asks to turn the cursor off entirely, remove `<Cursor />` from `App.tsx`.
+ * - If sir asks to change the cursor color, scroll down to the bottom of this file and change `bg-white` and `border-white` to another Tailwind color class.
+ */
 export function Cursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isHovering, setIsHovering] = useState(false)
+  const outerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Only enable custom cursor on non-touch devices
+    // Disable on mobile/touch devices
     if (window.matchMedia('(pointer: coarse)').matches) return
 
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    let targetX = 0
+    let targetY = 0
+    let outerX = 0
+    let outerY = 0
+    let isHovering = false
+    let isVisible = false
+    let animationFrameId: number
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetX = e.clientX
+      targetY = e.clientY
+      
+      if (!isVisible) {
+        isVisible = true
+        if (outerRef.current) outerRef.current.style.opacity = '1'
+        if (innerRef.current) innerRef.current.style.opacity = '1'
+      }
     }
 
-    const updateHoverState = (e: MouseEvent) => {
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       // Check if hovering over a clickable element
       const isClickable = 
@@ -23,15 +52,32 @@ export function Cursor() {
         target.closest('a') !== null ||
         target.closest('button') !== null
 
-      setIsHovering(isClickable)
+      isHovering = isClickable
     }
 
-    window.addEventListener('mousemove', updateMousePosition)
-    window.addEventListener('mouseover', updateHoverState)
+    const updatePosition = () => {
+      // Lerp for smooth trailing effect (physics simulation)
+      outerX += (targetX - outerX) * 0.22
+      outerY += (targetY - outerY) * 0.22
+
+      if (outerRef.current) {
+        outerRef.current.style.transform = `translate3d(${outerX - 24}px, ${outerY - 24}px, 0) scale(${isHovering ? 1.5 : 1})`
+      }
+      if (innerRef.current) {
+        innerRef.current.style.transform = `translate3d(${targetX - 5}px, ${targetY - 5}px, 0) scale(${isHovering ? 0 : 1})`
+      }
+
+      animationFrameId = requestAnimationFrame(updatePosition)
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseover', handleMouseOver)
+    updatePosition()
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition)
-      window.removeEventListener('mouseover', updateHoverState)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseover', handleMouseOver)
+      cancelAnimationFrame(animationFrameId)
     }
   }, [])
 
@@ -47,30 +93,16 @@ export function Cursor() {
         }
       `}</style>
       
-      {/* Outer Trailing Glass Ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border-[1.5px] border-neutral-400/50 bg-white/5 backdrop-blur-[2px] rounded-full pointer-events-none z-[9998] flex items-center justify-center"
-        animate={{
-          x: mousePosition.x - 24,
-          y: mousePosition.y - 24,
-          scale: isHovering ? 1.5 : 1,
-          opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
-        }}
-        transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.2 }}
+      {/* Outer Trailing Ring */}
+      <div
+        ref={outerRef}
+        className="fixed top-0 left-0 w-12 h-12 border-[1.5px] border-white bg-transparent rounded-full pointer-events-none z-[9998] opacity-0 mix-blend-difference transition-opacity duration-300 will-change-transform"
       />
       
       {/* Inner Sharp Dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2.5 h-2.5 bg-neutral-800 rounded-full pointer-events-none z-[9999]"
-        style={{ mixBlendMode: 'difference' }}
-        animate={{
-          x: mousePosition.x - 5,
-          y: mousePosition.y - 5,
-          scale: isHovering ? 0 : 1,
-          backgroundColor: isHovering ? "white" : "white",
-          opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
-        }}
-        transition={{ type: 'spring', stiffness: 1000, damping: 28, mass: 0.1 }}
+      <div
+        ref={innerRef}
+        className="fixed top-0 left-0 w-2.5 h-2.5 bg-white rounded-full pointer-events-none z-[9999] opacity-0 mix-blend-difference transition-opacity duration-300 will-change-transform"
       />
     </>
   )

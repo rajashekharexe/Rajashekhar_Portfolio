@@ -1,30 +1,48 @@
+/**
+ * LogoTicker Component
+ * 
+ * WHAT IT DOES:
+ * Renders the LogoTicker UI component or visual effect.
+ * 
+ * INSTRUCTOR NOTE / HOW TO MODIFY:
+ * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ */
 import { motion } from 'framer-motion'
 
+const techs = [
+  'React', 'TypeScript', 'Node.js', 'Python', 'Tailwind CSS',
+  'Firebase', 'Express', 'MongoDB', 'HTML & CSS', 'C',
+  'Framer Motion', 'GSAP', 'Socket.io', 'OpenCV', 'Vite'
+]
+
 export function LogoTicker() {
-  const logos = ['HTML', 'CSS', 'C', 'Python']
-  
+  // Duplicate for seamless infinite loop
+  const items = [...techs, ...techs]
+
   return (
     <div className="py-12 bg-background border-t border-neutral-100 overflow-hidden flex relative z-20">
-      
-      {/* Gradients for fading edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <motion.div
-        animate={{ x: "-50%" }}
+        animate={{ x: '-50%' }}
         transition={{
-          duration: 15,
+          duration: 30,
           repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
+          ease: 'linear',
+          repeatType: 'loop',
         }}
         className="flex whitespace-nowrap"
       >
-        {/* Repeat enough times to cover ultra-wide monitors since only 4 logos exist */}
-        {[...logos, ...logos, ...logos, ...logos, ...logos, ...logos, ...logos, ...logos].map((logo, i) => (
-          <div key={i} className="flex items-center space-x-3 px-16 text-foreground/50 grayscale hover:grayscale-0 hover:text-foreground transition-all duration-300 cursor-default">
-            <div className="w-4 h-4 rounded-full bg-current"></div>
-            <span className="text-xl font-display font-bold">{logo}</span>
+        {items.map((tech, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 px-10 text-foreground/40 hover:text-foreground transition-colors duration-300 cursor-default group"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 group-hover:bg-neutral-900 transition-colors duration-300 flex-shrink-0" />
+            <span className="text-lg font-display font-bold tracking-wide">{tech}</span>
           </div>
         ))}
       </motion.div>

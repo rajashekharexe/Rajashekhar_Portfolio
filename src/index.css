@@ -1,8 +1,31 @@
+/**
+ * GLOBAL STYLESHEET
+ * 
+ * WHAT IT DOES:
+ * Imports the core Tailwind CSS libraries and defines global styles for the entire website.
+ * 
+ * INSTRUCTOR NOTE / HOW TO MODIFY:
+ * - If sir asks "how did you hide the scrollbar?", point him to the `scrollbar-hide` and `html::-webkit-scrollbar` sections below.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-padding-top: 100px; /* Offset for the fixed navbar */
+  }
+
+  /* Hide native browser scrollbar globally */
+  html, body {
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;   /* IE / Edge */
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;              /* Chrome / Safari / Opera */
+  }
+
   body {
     @apply bg-background text-foreground antialiased font-sans overflow-x-hidden;
   }
@@ -13,5 +36,14 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  /* Utility to hide scrollbar on any element */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -1,0 +1,25 @@
+/**
+ * DotField Animations
+ * 
+ * WHAT IT DOES:
+ * Contains the custom CSS keyframes used by the DotField component (in the Contact section).
+ * It creates a breathing/pulsing effect by animating the opacity of the dots from 0 to 1 and back.
+ */
+
+@keyframes dot-fade {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dot-field-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}

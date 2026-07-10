@@ -1,6 +1,17 @@
 import { motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 
+/**
+ * MagneticButton
+ * 
+ * WHAT IT DOES:
+ * A wrapper component that makes anything inside it "stick" to your mouse cursor slightly when you hover over it (like a magnet).
+ * Used for the Navbar links and GitHub button.
+ * 
+ * HOW IT WORKS:
+ * `handleMouse` calculates the distance between your cursor (`clientX`) and the exact center of the button (`middleX`).
+ * It sets the Framer Motion `animate` position to a fraction of that distance (e.g. `* 0.3`), pulling the button towards the mouse.
+ */
 export function MagneticButton({ children, className = "" }: { children: React.ReactNode, className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
