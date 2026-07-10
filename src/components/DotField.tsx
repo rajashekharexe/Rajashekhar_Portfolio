@@ -134,7 +134,7 @@ const DotField = memo(({
     /* ── Render loop (60+ fps unlocked) ───────────────────────────────────── */
     let frame = 0
 
-    function tick(ts: number) {
+    function tick() {
       rafRef.current = requestAnimationFrame(tick)
       frame++
 

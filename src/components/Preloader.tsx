@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Signature } from './Signature'
 
 /**
  * Preloader
@@ -18,19 +17,11 @@ import { Signature } from './Signature'
  * - Change door colors: Find `className="w-full h-[50vh] bg-black"` and change `bg-black` to `bg-blue-500`.
  */
 export function Preloader({ onComplete }: { onComplete: () => void }) {
-  // `progress` stores a number from 0 to 100.
   const [progress, setProgress] = useState(0)
-  const [fontSize, setFontSize] = useState(64)
 
   useEffect(() => {
     // Force scroll to top on reload so it looks clean
     window.scrollTo(0, 0)
-
-    const handleResize = () => {
-      setFontSize(window.innerWidth < 768 ? 44 : 72)
-    }
-    handleResize()
-    window.addEventListener('resize', handleResize)
 
     const timer = setInterval(() => {
       setProgress(p => {
@@ -47,7 +38,6 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     
     return () => {
       clearInterval(timer)
-      window.removeEventListener('resize', handleResize)
     }
   }, [onComplete])
 

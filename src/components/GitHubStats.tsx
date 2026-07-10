@@ -73,7 +73,6 @@ function ContributionHeatmap() {
   // Generate 52 weeks × 7 days of plausible contribution data
   const cells = useMemo(() => {
     const weeks = 52
-    const today = new Date()
     const data: number[][] = []
     const seed = (n: number) => ((Math.sin(n * 9301 + 49297) * 233280) % 1 + 1) % 1
 

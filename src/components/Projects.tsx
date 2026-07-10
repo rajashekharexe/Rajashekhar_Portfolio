@@ -186,9 +186,7 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
   
   // Media block parallax — refined, not overwhelming
   const imgY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"])
-  const imgScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.88, 1.04, 0.88])
-  const imgRotateY = useTransform(scrollYProgress, [0, 0.5, 1], [isEven ? -20 : 20, 0, isEven ? 20 : -20])
-  const imgRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [12, -2, -12])
+  const imgScale   = useTransform(scrollYProgress, [0.3, 0.6], [0.8, 1])
   const imgOpacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0])
 
   // Text parallax
