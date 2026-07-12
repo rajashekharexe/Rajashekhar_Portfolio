@@ -2,6 +2,7 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { MagneticButton } from './MagneticButton'
 import { useLenis } from 'lenis/react'
+import { useSoundEffects } from '../hooks/useSoundEffects'
 
 const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
 
@@ -20,13 +21,14 @@ const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
  * - To add or remove links, just change the `links` array at the top of this file.
  * - To change the white background color when scrolled, look for `bg-white/90` and change it to `bg-black/90` (and adjust text colors accordingly).
  */
-export function Navbar() {
+export function Navbar({ isReady = true }: { isReady?: boolean }) {
   // isScrolled: true if the user scrolled past the hero section (triggers white background)
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [isGalaxy, setIsGalaxy] = useState(false)
   const { scrollY } = useScroll()
   const lenis = useLenis()
+  const { playHover } = useSoundEffects()
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 50)
@@ -67,8 +69,8 @@ export function Navbar() {
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: isGalaxy ? 0 : 1 }}
-      transition={{ duration: isGalaxy ? 0.5 : 0.8, ease: [0.16, 1, 0.3, 1] }}
+      animate={isReady ? { y: 0, opacity: isGalaxy ? 0 : 1 } : { y: -20, opacity: 0 }}
+      transition={{ duration: isGalaxy ? 0.5 : 0.8, ease: [0.16, 1, 0.3, 1], delay: isReady ? 0.5 : 0 }}
       style={{ pointerEvents: isGalaxy ? 'none' : 'auto' }}
       className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 border-b transition-all duration-300 ease-out will-change-transform ${
         isScrolled
@@ -110,6 +112,7 @@ export function Navbar() {
                 }}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
+                onMouseEnter={playHover}
                 transition={{
                   duration: 0.5,
                   delay: 0.15 + i * 0.06,
@@ -145,6 +148,7 @@ export function Navbar() {
             href="https://github.com/rajashekharexe"
             target="_blank"
             rel="noopener noreferrer"
+            onMouseEnter={playHover}
             className="hidden sm:block hover:text-gray-300 transition-colors p-2"
           >
             GitHub

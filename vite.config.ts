@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  assetsInclude: ['**/*.glb'],
 
   resolve: {
     dedupe: ['react', 'react-dom', 'three'],

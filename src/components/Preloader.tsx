@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react'
  * - Change loading speed: Scroll down to `setInterval` and change `40` to a higher number (e.g. 100) to make it slower.
  * - Change door colors: Find `className="w-full h-[50vh] bg-black"` and change `bg-black` to `bg-blue-500`.
  */
-export function Preloader({ onComplete }: { onComplete: () => void }) {
+export function Preloader({ onComplete, onStartExit }: { onComplete: () => void, onStartExit?: () => void }) {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -27,8 +27,9 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       setProgress(p => {
         if (p >= 100) {
           clearInterval(timer)
-          // Wait briefly at 100% before lifting the curtain, and wait for the door animation (1.1s) to finish
-          setTimeout(onComplete, 1200)
+          if (onStartExit) onStartExit()
+          // Wait for the new 0.5s delay + 0.9s door animation to finish
+          setTimeout(onComplete, 1600)
           return 100
         }
         // Accelerate at the end for punchy feel
@@ -48,7 +49,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: progress === 100 ? "-100%" : 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}
       />
       
       {/* Bottom Half of the Vault */}
@@ -56,7 +57,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: progress === 100 ? "100%" : 0 }}
-        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+        transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}
       />
 
       {/* Minimalist Premium Loading Overlay */}
@@ -68,13 +69,34 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           scale: progress === 100 ? 1.05 : 1,
           filter: progress === 100 ? "blur(10px)" : "blur(0px)" 
         }}
-        transition={{ duration: 0.5, ease: "easeIn" }}
+        transition={{ duration: 0.5, ease: "easeIn", delay: 0.3 }}
       >
         <div className="relative flex flex-col items-center w-full max-w-5xl mx-auto">
-          {/* Name */}
-          <div className="font-display font-black text-4xl sm:text-6xl md:text-[7rem] lg:text-[9rem] uppercase tracking-tighter text-white text-center leading-none">
-            RAJASHEKHAR
-          </div>
+          {/* Name - Premium Staggered Reveal */}
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+              }
+            }}
+            className="flex justify-center font-display font-black text-4xl sm:text-6xl md:text-[7rem] lg:text-[9rem] uppercase tracking-tighter text-white text-center leading-none overflow-hidden pb-2"
+          >
+            {"RAJASHEKHAR".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                variants={{
+                  hidden: { x: -40, opacity: 0, filter: "blur(8px)" },
+                  visible: { x: 0, opacity: 1, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+                }}
+                className="inline-block"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </motion.div>
           
           {/* Sleek Progress Bar */}
           <div className="w-full max-w-[200px] md:max-w-[400px] h-[2px] bg-neutral-900 mt-8 rounded-full overflow-hidden">

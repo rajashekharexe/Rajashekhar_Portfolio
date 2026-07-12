@@ -149,10 +149,22 @@ export function Skills() {
               <p className="text-[10px] font-black uppercase tracking-[0.25em] mb-2" style={{ color: PURPLE }}>
                 Skills
               </p>
-              <h2 className="text-[3.5rem] md:text-[4.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-2 text-black flex flex-col items-start">
-                <TextRepel text="Technical" radius={100} strength={35} />
-                <TextRepel text="Arsenal" radius={100} strength={35} />
-              </h2>
+              <motion.h2 
+                initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }}
+                variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+                className="text-[3.5rem] md:text-[4.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-2 text-black flex flex-col items-start"
+              >
+                <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                  <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                    <TextRepel text="Technical" radius={100} strength={35} />
+                  </motion.div>
+                </div>
+                <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                  <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                    <TextRepel text="Arsenal" radius={100} strength={35} />
+                  </motion.div>
+                </div>
+              </motion.h2>
               <motion.div
                 initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}

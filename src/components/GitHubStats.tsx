@@ -167,14 +167,20 @@ export function GitHubStats({ username = 'rajashekharexe' }: { username?: string
         {/* Top row: heading + CTA */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden" whileInView="visible" viewport={{ once: false }}
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
           >
             <h2 className="text-[2.5rem] md:text-[4rem] font-display font-black uppercase leading-[0.9] tracking-tight mb-2 text-neutral-900 flex flex-col items-start">
-              <TextRepel text="Open Source" radius={100} strength={35} />
-              <TextRepel text="Activity"    radius={100} strength={35} />
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Open Source" radius={100} strength={35} />
+                </motion.div>
+              </div>
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Activity"    radius={100} strength={35} />
+                </motion.div>
+              </div>
             </h2>
             <p className="text-neutral-500 font-medium max-w-sm text-sm">
               Live metrics from GitHub — continuous delivery and engineering momentum.

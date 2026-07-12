@@ -10,7 +10,6 @@
 import { useEffect, useRef, memo } from 'react'
 import './DotField.css'
 
-const TWO_PI = Math.PI * 2
 
 interface Dot {
   ax: number; ay: number
@@ -133,9 +132,12 @@ const DotField = memo(({
 
     /* ── Render loop (60+ fps unlocked) ───────────────────────────────────── */
     let frame = 0
+    let isVisible = true
 
     function tick() {
       rafRef.current = requestAnimationFrame(tick)
+      if (!isVisible) return // Pause math & drawing when off-screen to save CPU
+      
       frame++
 
       const dots = dotsRef.current
@@ -206,14 +208,13 @@ const DotField = memo(({
           drawX += Math.cos(d.ay * 0.03 + t * 0.7) * p.waveAmplitude * 0.5
         }
 
+        // Use fast rects instead of expensive arcs for massive CPU performance gain
         if (p.sparkle) {
           const hash = ((i * 2654435761) ^ (frame >> 3)) >>> 0
           const r    = (hash % 100) < 3 ? rad * 1.8 : rad
-          ctx!.moveTo(drawX + r, drawY)
-          ctx!.arc(drawX, drawY, r, 0, TWO_PI)
+          ctx!.rect(drawX - r, drawY - r, r * 2, r * 2)
         } else {
-          ctx!.moveTo(drawX + rad, drawY)
-          ctx!.arc(drawX, drawY, rad, 0, TWO_PI)
+          ctx!.rect(drawX - rad, drawY - rad, rad * 2, rad * 2)
         }
       }
 
@@ -224,6 +225,9 @@ const DotField = memo(({
 
     const resizeObs = new ResizeObserver(() => { setTimeout(doResize, 60) })
     resizeObs.observe(parent)
+
+    const ioObs = new IntersectionObserver(([entry]) => { isVisible = entry.isIntersecting }, { rootMargin: '200px' })
+    ioObs.observe(parent)
 
     // Update canvas origin on scroll — cheap, just reads getBoundingClientRect once
     window.addEventListener('scroll',   updateOrigin, { passive: true })
@@ -237,6 +241,7 @@ const DotField = memo(({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       resizeObs.disconnect()
+      ioObs.disconnect()
       window.removeEventListener('scroll',    updateOrigin)
       window.removeEventListener('resize',    updateOrigin)
       window.removeEventListener('mousemove', onMouseMove)

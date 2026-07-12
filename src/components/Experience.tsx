@@ -98,19 +98,29 @@ export function Experience() {
         {/* Left: Title */}
         <div className="lg:w-5/12">
           <motion.div
-            initial={{ opacity: 0, y: 50, rotateX: 45 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }}
+            variants={{ hidden: { opacity: 0, y: 50, rotateX: 45 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
             className="origin-bottom"
           >
             <span className="text-xl font-display font-bold text-neutral-500 tracking-[0.2em] uppercase mb-4 block">
               Experience //
             </span>
             <h2 className="text-[3.5rem] md:text-[5.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter text-neutral-900 mb-8 flex flex-col items-start">
-              <TextRepel text="Driven by" radius={120} strength={45} />
-              <TextRepel text="Curiosity" radius={120} strength={45} />
-              <TextRepel text="& Code."   radius={120} strength={45} />
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Driven by" radius={120} strength={45} />
+                </motion.div>
+              </div>
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Curiosity" radius={120} strength={45} />
+                </motion.div>
+              </div>
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="& Code."   radius={120} strength={45} />
+                </motion.div>
+              </div>
             </h2>
             <motion.div
               style={{ scaleX: lineScale }}

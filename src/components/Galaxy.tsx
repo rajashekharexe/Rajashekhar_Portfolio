@@ -1,12 +1,3 @@
-/**
- * Galaxy Component
- * 
- * WHAT IT DOES:
- * Renders the Galaxy UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
- */
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl'
 import { useEffect, useRef } from 'react'
 import './Galaxy.css'
@@ -43,7 +34,7 @@ uniform float uAutoCenterRepulsion;
 uniform bool uTransparent;
 varying vec2 vUv;
 
-#define NUM_LAYER 4.0
+#define NUM_LAYER 2.0
 #define STAR_COLOR_CUTOFF 0.2
 #define MAT45 mat2(0.7071,-0.7071,0.7071,0.7071)
 #define PERIOD 3.0
@@ -187,7 +178,7 @@ export default function Galaxy({
 
     // ── Visibility observer — stop rendering when scrolled away ──────────
     const visObs = new IntersectionObserver(
-      ([entry]) => { isVisible.current = entry.isIntersecting },
+      (entries) => { entries.forEach(e => { isVisible.current = e.isIntersecting }) },
       { threshold: 0 }
     )
     visObs.observe(ctn)
@@ -297,5 +288,5 @@ export default function Galaxy({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <div ref={ctnDom} className={`galaxy-container${className ? ` ${className}` : ''}`} />
+  return <div ref={ctnDom} className={`galaxy-container absolute inset-0 ${className ? ` ${className}` : ''}`} />
 }

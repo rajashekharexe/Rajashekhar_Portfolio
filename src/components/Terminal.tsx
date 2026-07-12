@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { TextRepel } from './TextRepel'
+import { useSoundEffects } from '../hooks/useSoundEffects'
 
 interface HistoryLine {
   type: 'input' | 'output' | 'error' | 'system' | 'success' | 'info' | 'spacer'
@@ -198,6 +199,7 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
  * - It also handles Arrow Up/Down for command history, and Tab for autocomplete.
  */
 export function Terminal() {
+  const { playType } = useSoundEffects()
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<HistoryLine[]>(BOOT_LINES)
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -278,15 +280,21 @@ export function Terminal() {
   return (
     <section className="py-24 px-8 bg-neutral-50/50 border-t border-neutral-100">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        initial="hidden" whileInView="visible" viewport={{ once: false }}
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.1 } } }}
         className="text-center mb-12"
       >
         <h2 className="text-[2.5rem] md:text-[4rem] font-display font-black uppercase leading-[0.9] tracking-tight mb-4 text-neutral-900 flex flex-col items-center">
-          <TextRepel text="Command" radius={100} strength={35} />
-          <TextRepel text="Center"  radius={100} strength={35} />
+          <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+            <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+              <TextRepel text="Command" radius={100} strength={35} />
+            </motion.div>
+          </div>
+          <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+            <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+              <TextRepel text="Center"  radius={100} strength={35} />
+            </motion.div>
+          </div>
         </h2>
         <p className="text-neutral-500 font-medium max-w-sm mx-auto">
           Interact directly with the system. Try{' '}
@@ -311,6 +319,7 @@ export function Terminal() {
         transition={{ duration: 0.8, delay: 0.2 }}
         onClick={() => inputRef.current?.focus()}
         className="w-full max-w-4xl mx-auto bg-[#0d1117] border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl cursor-text"
+        data-cursor="text"
       >
         {/* Mac-style header */}
         <div className="flex items-center px-4 py-3 bg-[#161b22] border-b border-neutral-800">
@@ -359,7 +368,12 @@ export function Terminal() {
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={e => {
+                    if (!['Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 'Escape'].includes(e.key)) {
+                      playType()
+                    }
+                    handleKeyDown(e)
+                  }}
                   className="w-full bg-transparent outline-none border-none text-white text-xs md:text-sm font-mono caret-transparent"
                   autoComplete="off"
                   spellCheck={false}

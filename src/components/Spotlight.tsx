@@ -54,10 +54,10 @@ export function Spotlight() {
   return (
     <div
       ref={spotlightRef}
-      className="fixed top-0 left-0 w-[700px] h-[700px] pointer-events-none z-[1] mix-blend-difference opacity-15 will-change-transform"
+      className="fixed top-0 left-0 w-[700px] h-[700px] pointer-events-none z-[1] opacity-30 will-change-transform"
       style={{
         transform: `translate3d(-1000px, -1000px, 0)`,
-        background: `radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 65%)`
+        background: `radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 65%)`
       }}
     />
   )

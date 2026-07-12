@@ -3,6 +3,8 @@ import { useRef, useState } from 'react'
 import { DecryptedText } from './DecryptedText'
 import { TextRepel } from './TextRepel'
 import TiltedCard from './TiltedCard'
+import LiquidMedia from './LiquidMedia'
+import { useSoundEffects } from '../hooks/useSoundEffects'
 
 /**
  * Project Interface & Data Array
@@ -69,6 +71,7 @@ const projects: Project[] = [
 
 // Premium browser-frame media player — supports GIF (autoplay) and MP4 (hover-to-play)
 function ProjectMedia({ project }: { project: Project }) {
+  const { playHover } = useSoundEffects()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoFailed, setVideoFailed] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -76,6 +79,7 @@ function ProjectMedia({ project }: { project: Project }) {
   const isGif = Boolean(project.gif)
 
   const handleMouseEnter = () => {
+    playHover()
     if (!isGif && videoRef.current && !videoFailed) {
       videoRef.current.play().catch(() => setVideoFailed(true))
       setIsPlaying(true)
@@ -95,6 +99,7 @@ function ProjectMedia({ project }: { project: Project }) {
       className="relative w-full rounded-2xl overflow-hidden shadow-2xl border border-neutral-200 group/media bg-neutral-100"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-cursor={isGif ? "view" : "play"}
     >
       {/* Browser chrome bar */}
       <div className="flex items-center gap-2 px-4 py-3 bg-neutral-100 border-b border-neutral-200">
@@ -130,14 +135,7 @@ function ProjectMedia({ project }: { project: Project }) {
           />
         ) : (
           <>
-            {/* Fallback image — always behind the video */}
-            <img
-              src={project.image}
-              alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-
-            {/* Video on top (invisible until hover) */}
+            {/* The actual video is visually hidden but plays in the DOM for the WebGL texture */}
             {!videoFailed && (
               <video
                 ref={videoRef}
@@ -145,21 +143,25 @@ function ProjectMedia({ project }: { project: Project }) {
                 muted
                 loop
                 playsInline
+                crossOrigin="anonymous"
                 preload="none"
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
+                className="opacity-0 absolute pointer-events-none"
                 onError={() => setVideoFailed(true)}
               />
             )}
 
+            {/* The WebGL Canvas replaces the visual image/video */}
+            <LiquidMedia image={project.image} videoRef={videoRef} isHovered={isPlaying} />
+
             {/* Hover overlay — play hint */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none z-20 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
               <div className="bg-black/40 backdrop-blur-sm rounded-full p-5 border border-white/20 group-hover/media:scale-110 transition-transform duration-300">
                 <svg className="w-8 h-8 text-white fill-white" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
               <span className="absolute bottom-4 left-0 right-0 text-center text-white/70 text-xs font-bold uppercase tracking-widest">
-                Hover to play
+                Hover to interact
               </span>
             </div>
           </>
@@ -170,6 +172,7 @@ function ProjectMedia({ project }: { project: Project }) {
 }
 
 const ProjectRow = ({ project, index }: { project: Project, index: number }) => {
+  const { playHover } = useSoundEffects()
   const ref = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -210,9 +213,17 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
         className={`lg:col-span-5 flex flex-col justify-center relative z-10 px-4 lg:px-0 mt-20 lg:mt-0 ${!isEven ? 'lg:order-2 lg:items-end lg:text-right' : 'lg:order-1'}`}
       >
         <span className="text-4xl font-display font-black text-neutral-300 mb-4 block">0{index + 1} //</span>
-        <h3 className="text-4xl md:text-[3.5rem] leading-none font-display font-black uppercase tracking-tight mb-2 text-neutral-900 flex flex-wrap">
-          <TextRepel text={project.title} radius={100} strength={35} />
-        </h3>
+        <motion.h3 
+          initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }}
+          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+          className="text-4xl md:text-[3.5rem] leading-none font-display font-black uppercase tracking-tight mb-2 text-neutral-900 flex flex-wrap"
+        >
+          <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+            <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+              <TextRepel text={project.title} radius={100} strength={35} />
+            </motion.div>
+          </div>
+        </motion.h3>
         {project.subtitle && (
           <span className="block text-lg font-black text-black italic mb-6">
             {project.subtitle}
@@ -226,6 +237,7 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
           {project.tech.map((tech: string, i: number) => (
             <motion.span
               key={i}
+              onMouseEnter={playHover}
               whileHover={{ scale: 1.15, translateY: -5, rotateZ: i % 2 === 0 ? 3 : -3 }}
               className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-neutral-600 border border-neutral-300 px-5 py-3 rounded-full cursor-pointer hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-colors shadow-sm"
             >
@@ -240,6 +252,7 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
+            onMouseEnter={playHover}
             whileHover={{ x: 4 }}
             className={`mt-8 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-neutral-900 border-b-2 border-neutral-900 pb-1 hover:text-neutral-600 hover:border-neutral-600 transition-colors ${!isEven ? 'lg:self-end' : ''}`}
           >
@@ -320,14 +333,20 @@ export function Projects() {
       <div className="max-w-[1400px] mx-auto px-8 relative z-10">
         <div className="mb-32 md:mb-48">
           <motion.h2
-            initial={{ opacity: 0, y: 50, rotateX: 45 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }}
+            variants={{ hidden: { opacity: 0, y: 50, rotateX: 45 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
             className="text-[4rem] md:text-[6rem] leading-[0.85] font-display font-black uppercase tracking-tighter origin-bottom text-neutral-900 flex flex-col items-start"
           >
-            <TextRepel text="My" radius={120} strength={40} />
-            <TextRepel text="Projects" radius={120} strength={40} />
+            <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+              <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                <TextRepel text="My" radius={120} strength={40} />
+              </motion.div>
+            </div>
+            <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+              <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                <TextRepel text="Projects" radius={120} strength={40} />
+              </motion.div>
+            </div>
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}

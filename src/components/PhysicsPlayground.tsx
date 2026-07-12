@@ -7,7 +7,7 @@
  * INSTRUCTOR NOTE / HOW TO MODIFY:
  * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
  */
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { TextRepel } from './TextRepel'
 import Galaxy from './Galaxy'
@@ -66,28 +66,18 @@ function GlassButton({ children, href }: { children: React.ReactNode; href?: str
 
 export function PhysicsPlayground() {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const { scrollY } = useScroll()
-
-  const progress = useTransform(scrollY, (y) => {
-    const el = sectionRef.current
-    if (!el) return 0
-    const scrollable = el.offsetHeight - window.innerHeight
-    if (scrollable <= 0) return 0
-    return Math.max(0, Math.min(1, (y - el.offsetTop) / scrollable))
+  const { scrollYProgress: progress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"]
   })
 
   const headingY  = useTransform(progress, [0, 0.22], ['0%', '-130%'])
   const headingOp = useTransform(progress, [0, 0.18], [1, 0])
   const hintOp    = useTransform(progress, [0, 0.06], [1, 0])
 
-  // ── GPU-composited expand: clip-path instead of top/left/right/bottom ──
-  // Animating layout properties (top/left/right/bottom) causes a reflow every
-  // scroll frame. clip-path is handled entirely on the compositor thread.
-  const cT = useTransform(progress, [0, 0.40], [168, 0])   // top inset px
-  const cS = useTransform(progress, [0, 0.40], [28,  0])   // side inset px
-  const cB = useTransform(progress, [0, 0.40], [28,  0])   // bottom inset px
-  const cR = useTransform(progress, [0, 0.36], [18,  0])   // border-radius px
-  const clipPath = useMotionTemplate`inset(${cT}px ${cS}px ${cB}px ${cS}px round ${cR}px)`
+  // Animating clip-path over a WebGL Canvas destroys GPU performance in Chromium.
+  // We use a simple 100% GPU-accelerated opacity fade instead.
+  const canvasOpacity = useTransform(progress, [0, 0.15], [0, 1])
 
   return (
     <section
@@ -105,8 +95,18 @@ export function PhysicsPlayground() {
           className="absolute top-0 left-0 right-0 z-20 text-center pt-12 px-8 pointer-events-none"
         >
           <h2 className="text-[2.5rem] md:text-[4.5rem] font-display font-black uppercase leading-[0.85] tracking-tighter mb-4 text-white flex flex-col items-center">
-            <TextRepel text="Tech"     radius={100} strength={35} className="text-white" />
-            <TextRepel text="Universe" radius={100} strength={35} className="text-white" />
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: false }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="flex flex-col items-center">
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Tech"     radius={100} strength={35} className="text-white" />
+                </motion.div>
+              </div>
+              <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+                <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
+                  <TextRepel text="Universe" radius={100} strength={35} className="text-white" />
+                </motion.div>
+              </div>
+            </motion.div>
           </h2>
           <p className="text-neutral-500 text-sm font-medium mb-4">
             ✦ Move cursor to warp stars · Scroll to go full screen
@@ -127,14 +127,14 @@ export function PhysicsPlayground() {
         <motion.div
           style={{
             position: 'absolute',
-            inset: 0,               // always covers full sticky viewport
-            clipPath,               // ← GPU only, no layout reflow
-            willChange: 'clip-path',
+            inset: 0,
+            opacity: canvasOpacity,
+            willChange: 'opacity',
           }}
         >
           <div className="absolute inset-0 bg-[#020208]" />
           <Galaxy
-            density={1.3}
+            density={2.5}
             hueShift={0}
             saturation={0}          // ← pure white stars
             glowIntensity={0.5}
