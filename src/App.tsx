@@ -57,6 +57,7 @@ const SectionShell = ({ id, bg = 'bg-black', h = 'min-h-screen' }: { id: string;
  * This safely removes the feature from the screen instantly without breaking the app.
  */
 function App() {
+  console.log("Hello from the test plan!");
   // Global state to track if the black preloader screen is currently running
   const [loading, setLoading] = useState(true)
   const [isReady, setIsReady] = useState(false)

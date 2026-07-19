@@ -21,13 +21,16 @@ export function Cursor() {
     if (window.matchMedia('(pointer: coarse)').matches) return
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isVisible) setIsVisible(true)
       cursorX.set(e.clientX)
       cursorY.set(e.clientY)
+    }
 
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       const cursorContext = target.closest('[data-cursor]')?.getAttribute('data-cursor')
-      const isClickable = target.closest('a') || target.closest('button') || window.getComputedStyle(target).cursor === 'pointer'
+      
+      // Try to avoid getComputedStyle if possible by checking tag names first
+      const isClickable = target.closest('a') || target.closest('button') || (target.style && target.style.cursor === 'pointer') || window.getComputedStyle(target).cursor === 'pointer'
 
       if (cursorContext) {
         setCursorType(cursorContext)
@@ -41,16 +44,21 @@ export function Cursor() {
     const handleMouseLeave = () => setIsVisible(false)
     const handleMouseEnter = () => setIsVisible(true)
 
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    window.addEventListener('mouseover', handleMouseOver, { passive: true })
     document.addEventListener('mouseleave', handleMouseLeave)
     document.addEventListener('mouseenter', handleMouseEnter)
 
+    // Initial visible state
+    setIsVisible(true)
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseover', handleMouseOver)
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseenter', handleMouseEnter)
     }
-  }, [cursorX, cursorY, isVisible])
+  }, [cursorX, cursorY])
 
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return null
 

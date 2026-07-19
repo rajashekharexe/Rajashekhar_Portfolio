@@ -5,6 +5,7 @@ import {
     useSpring,
     useTransform,
     type MotionValue,
+    useInView
 } from "framer-motion";
 import { useEffect, useRef, useCallback } from "react";
 
@@ -166,8 +167,12 @@ export function TextRepel({
 }: TextRepelProps) {
     const mouseX = useMotionValue(-9999);
     const mouseY = useMotionValue(-9999);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef);
 
     useEffect(() => {
+        if (!isInView) return;
+
         const handleMouseMove = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
@@ -184,10 +189,11 @@ export function TextRepel({
             window.removeEventListener("mousemove", handleMouseMove);
             document.body.removeEventListener("mouseleave", handleMouseLeave);
         };
-    }, [mouseX, mouseY]);
+    }, [mouseX, mouseY, isInView]);
 
     return (
         <div
+            ref={containerRef}
             data-text-repel
             className={cn(
                 "inline-flex flex-wrap items-center justify-center cursor-default select-none",

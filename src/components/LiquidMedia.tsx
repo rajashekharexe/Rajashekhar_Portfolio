@@ -1,4 +1,5 @@
 import { useRef, useMemo, useEffect, useState, Suspense } from 'react'
+import { useInView } from 'framer-motion'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
@@ -148,9 +149,13 @@ const Scene = ({ image, videoRef, isHovered }: { image: string, videoRef: React.
 }
 
 export default function LiquidMedia({ image, videoRef, isHovered }: { image: string, videoRef: React.RefObject<HTMLVideoElement | null>, isHovered: boolean }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef);
+
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none z-10">
+    <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none z-10">
       <Canvas
+        frameloop={isInView ? "always" : "demand"}
         orthographic
         camera={{ position: [0, 0, 1], zoom: 1 }}
         dpr={[1, 2]}

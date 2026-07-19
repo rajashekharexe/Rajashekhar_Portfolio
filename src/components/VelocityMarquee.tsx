@@ -15,7 +15,8 @@ import {
   useTransform,
   useMotionValue,
   useVelocity,
-  useAnimationFrame
+  useAnimationFrame,
+  useInView
 } from "framer-motion";
 
 const wrap = (min: number, max: number, v: number) => {
@@ -29,6 +30,8 @@ interface ParallaxProps {
 }
 
 export function VelocityMarquee({ children, baseVelocity = 100 }: ParallaxProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef);
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
@@ -47,6 +50,8 @@ export function VelocityMarquee({ children, baseVelocity = 100 }: ParallaxProps)
 
   const directionFactor = useRef<number>(1);
   useAnimationFrame((_t, delta) => {
+    if (!isInView) return; // PAUSE CALCULATION WHEN OFF-SCREEN
+
     const activeVelocity = isHovering ? baseVelocity * 0.15 : baseVelocity;
     let moveBy = directionFactor.current * activeVelocity * (delta / 1000);
 
@@ -63,6 +68,7 @@ export function VelocityMarquee({ children, baseVelocity = 100 }: ParallaxProps)
 
   return (
     <div 
+      ref={containerRef}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       className="overflow-hidden w-full whitespace-nowrap flex flex-nowrap m-0 leading-[0.8] tracking-tighter py-8 select-none pointer-events-auto cursor-none border-y border-neutral-100"
