@@ -3,20 +3,27 @@ import heroImage from '../assets/id_photo.png'
 import { TextRepel } from './TextRepel'
 import TextType from './TextType'
 import { useRef } from 'react'
-import { useInView, motion } from 'framer-motion'
+import { useInView, motion, useScroll, useTransform } from 'framer-motion'
 
 export function AboutMe() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const cardY = useTransform(scrollYProgress, [0, 1], [150, -150]);
 
   return (
     <section id="about-me" ref={containerRef} className="relative w-full bg-background py-20 px-8 border-t border-neutral-800">
       <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row items-center gap-16">
         
         {/* Left side: 3D ID Card */}
-        <div className="relative w-full md:w-1/2 flex justify-center h-[700px]">
+        <motion.div style={{ y: cardY }} className="relative w-full md:w-1/2 flex justify-center h-[700px]">
           <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} frontImage={heroImage} triggerSwing={isInView} />
-        </div>
+        </motion.div>
         
         {/* Right side: Content */}
         <div className="w-full md:w-1/2 flex flex-col justify-center max-w-2xl">
