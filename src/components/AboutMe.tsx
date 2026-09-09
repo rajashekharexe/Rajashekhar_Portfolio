@@ -17,7 +17,7 @@ export function AboutMe() {
   const cardY = useTransform(scrollYProgress, [0, 1], [150, -150]);
 
   return (
-    <section id="about-me" ref={containerRef} className="relative w-full bg-background py-20 px-8 border-t border-neutral-800">
+    <section id="about-me" ref={containerRef} className="relative w-full bg-background py-20 px-8 border-t border-neutral-200/80">
       <div className="max-w-[1400px] mx-auto w-full flex flex-col md:flex-row items-center gap-16">
         
         {/* Left side: 3D ID Card */}
