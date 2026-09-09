@@ -18,31 +18,31 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
   // Subtle parallax for the main image
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
   return (
-    <section id="about" ref={containerRef} className="relative min-h-screen bg-background pt-16 md:pt-20 pb-6 px-6 md:px-12 overflow-hidden flex flex-col justify-center">
-      <div className="max-w-[1400px] w-full mx-auto relative flex-1 flex items-center">
+    <section id="about" ref={containerRef} className="relative min-h-screen bg-background pt-14 pb-4 px-8 overflow-hidden flex flex-col justify-start">
+      <div className="max-w-[1400px] w-full mx-auto relative flex-1 flex items-start pt-2">
         
-        {/* The Image (Centered behind text) */}
-        <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none">
+        {/* The Image (Centered / slightly pulled right, behind text) */}
+        <div className="absolute inset-x-0 bottom-0 top-0 z-0 flex items-end justify-center md:pl-20 pointer-events-none">
           <motion.img 
             src="/hero-image.png"
-            alt="Rajashekhar - Web Developer & System Designer"
-            className="h-[88%] md:h-[92%] w-auto max-w-none object-contain opacity-100 brightness-[1.05] contrast-[1.1]" 
+            alt="Futuristic Designer"
+            className="h-[95%] w-auto max-w-none object-contain opacity-100 brightness-[1.05] contrast-[1.1] drop-shadow-2xl" 
             style={{ 
               y,
               WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
               maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)" 
             }}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={isReady ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isReady ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
           />
         </div>
 
         {/* Content Layer */}
-        <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-4">
+        <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-12 gap-6 pb-4">
           
-          {/* Left Column (Huge Text + Bio + CTAs) */}
-          <div className="col-span-12 md:col-span-6 lg:col-span-5 flex flex-col gap-3.5">
+          {/* Left Column (Huge Text + Bio) */}
+          <div className="col-span-12 md:col-span-6 lg:col-span-5 flex flex-col gap-4">
             <motion.div
               initial="hidden"
               animate={isReady ? "visible" : "hidden"}
@@ -52,12 +52,12 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
                   opacity: 1,
                   transition: {
                     staggerChildren: 0.08,
-                    delayChildren: 0.4
+                    delayChildren: 0.5
                   }
                 }
               }}
             >
-              <h1 className="text-[2.6rem] sm:text-[3.2rem] md:text-[3.6rem] lg:text-[4.2rem] xl:text-[4.5rem] leading-[0.88] font-display font-black uppercase tracking-tighter mb-3 text-black flex flex-col items-start">
+              <h1 className="text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-2 text-black flex flex-col items-start">
                 <div className="overflow-hidden pb-1" style={{ perspective: 1200 }}>
                   <motion.div 
                     variants={{
@@ -66,7 +66,7 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
                     }} 
                     style={{ transformOrigin: "top center" }}
                   >
-                    <TextRepel text="AI-Powered" radius={110} strength={35} />
+                    <TextRepel text="AI-Powered" radius={120} strength={40} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1200 }}>
@@ -77,7 +77,7 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
                     }} 
                     style={{ transformOrigin: "top center" }}
                   >
-                    <TextRepel text="Web" radius={110} strength={35} />
+                    <TextRepel text="Web" radius={120} strength={40} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1200 }}>
@@ -88,7 +88,7 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
                     }} 
                     style={{ transformOrigin: "top center" }}
                   >
-                    <TextRepel text="Developer" radius={110} strength={35} />
+                    <TextRepel text="Developer" radius={120} strength={40} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1200 }}>
@@ -99,17 +99,17 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
                     }} 
                     style={{ transformOrigin: "top center" }}
                   >
-                    <TextRepel text="& Designer" radius={110} strength={35} />
+                    <TextRepel text="& Designer" radius={120} strength={40} />
                   </motion.div>
                 </div>
               </h1>
               
               <motion.p 
                 variants={{
-                  hidden: { opacity: 0, y: 15 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.75 } }
+                  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+                  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 } }
                 }}
-                className="text-base md:text-lg font-semibold text-black max-w-sm leading-snug mb-2"
+                className="text-xl md:text-2xl font-medium text-black mb-3 max-w-sm leading-tight"
               >
                 Web Developer & System Designer. Specializing in HTML, CSS, Firebase & AI-assisted web engineering.
               </motion.p>
@@ -119,58 +119,53 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
               initial="hidden"
               animate={isReady ? "visible" : "hidden"}
               variants={{
-                hidden: { opacity: 0, y: 15 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.85, ease: [0.16, 1, 0.3, 1] } }
+                hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, delay: 1.0, ease: [0.16, 1, 0.3, 1] } }
               }}
             >
-              <p className="text-xs md:text-sm font-medium text-neutral-700 max-w-[340px] mb-4 leading-relaxed">
+              <p className="text-sm font-medium text-black max-w-[340px] mb-3 leading-relaxed">
                 Final-year BCA student architecting scalable database schemas, responsive UI workflows, and modern 3D WebGL experiences. Winner of 4th place at IEEE AI Arena 2.0.
               </p>
-              <div className="flex items-center flex-wrap gap-5 text-black font-semibold text-sm">
+              <div className="flex items-center flex-wrap gap-6 text-black font-semibold text-sm">
                 <a 
                   href="/resume.pdf" 
                   download="Rajashekhar_Amarappagol_Resume.pdf" 
-                  className="bg-primary hover:bg-[#e04100] text-white px-6 py-2.5 rounded-full transition-all uppercase tracking-widest text-[11px] font-bold shadow-md hover:shadow-lg active:scale-95 flex items-center gap-2"
+                  className="bg-primary text-white px-6 py-3 rounded-full hover:bg-neutral-800 transition-colors uppercase tracking-widest text-[10px] md:text-xs font-bold shadow-sm active:scale-95"
                 >
-                  <span>Download CV</span>
-                  <svg className="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
+                  Download CV
                 </a>
-                <a href="https://www.linkedin.com/in/rajashekhar-exe/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-xs md:text-sm">LinkedIn</a>
-                <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors text-xs md:text-sm">GitHub</a>
+                <a href="https://www.linkedin.com/in/rajashekhar-exe/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a>
+                <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column (Original 3 Stat Blocks - neatly sized & aligned) */}
-          <div className="col-span-12 md:col-span-5 md:col-start-8 lg:col-span-5 lg:col-start-8 flex flex-col gap-4 md:gap-5 z-20 self-center">
+          {/* Right Column (Floating Stats - Bold, original scale, neatly placed) */}
+          <div className="col-span-12 md:col-span-5 md:col-start-8 lg:col-span-5 lg:col-start-8 flex flex-col gap-6 md:gap-7 pt-2 md:pt-4 pb-4 z-20">
             
             <motion.div
               style={{ perspective: 1000 }}
               initial="hidden"
               animate={isReady ? "visible" : "hidden"}
               variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, delayChildren: 0.9, staggerChildren: 0.08, ease: [0.16, 1, 0.3, 1] } }
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1, delayChildren: 1.1, staggerChildren: 0.1, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="max-w-[340px] self-start md:self-end text-left"
+              className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl"
             >
-              <h3 className="font-display font-black text-2xl md:text-3xl lg:text-[2rem] uppercase leading-[0.92] tracking-tight mb-1 text-foreground flex flex-col items-start">
+              <h3 className="font-display font-black text-4xl md:text-5xl uppercase leading-[0.9] tracking-tight mb-2 text-foreground flex flex-col items-start">
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="System" radius={80} strength={25} />
+                    <TextRepel text="System" radius={90} strength={30} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="Designer" radius={80} strength={25} />
+                    <TextRepel text="Designer" radius={90} strength={30} />
                   </motion.div>
                 </div>
               </h3>
-              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-xs md:text-sm text-neutral-700 font-medium leading-relaxed">
+              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-sm md:text-base text-black font-medium leading-relaxed">
                 Designing database schemas, Firebase security rules, and end-to-end user workflows.
               </motion.p>
             </motion.div>
@@ -180,24 +175,24 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
               initial="hidden"
               animate={isReady ? "visible" : "hidden"}
               variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, delayChildren: 1.05, staggerChildren: 0.08, ease: [0.16, 1, 0.3, 1] } }
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1, delayChildren: 1.25, staggerChildren: 0.1, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="max-w-[340px] self-start md:self-end text-left"
+              className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl"
             >
-              <h3 className="font-display font-black text-2xl md:text-3xl lg:text-[2rem] uppercase leading-[0.92] tracking-tight mb-1 text-foreground flex flex-col items-start">
+              <h3 className="font-display font-black text-4xl md:text-5xl uppercase leading-[0.9] tracking-tight mb-2 text-foreground flex flex-col items-start">
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="AI-Assisted" radius={80} strength={25} />
+                    <TextRepel text="AI-Assisted" radius={90} strength={30} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="Stack" radius={80} strength={25} />
+                    <TextRepel text="Stack" radius={90} strength={30} />
                   </motion.div>
                 </div>
               </h3>
-              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-xs md:text-sm text-neutral-700 font-medium leading-relaxed">
+              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-sm md:text-base text-black font-medium leading-relaxed">
                 Building with Google Antigravity, React, TypeScript, and Three.js physics.
               </motion.p>
             </motion.div>
@@ -207,24 +202,24 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
               initial="hidden"
               animate={isReady ? "visible" : "hidden"}
               variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.8, delayChildren: 1.2, staggerChildren: 0.08, ease: [0.16, 1, 0.3, 1] } }
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1, delayChildren: 1.4, staggerChildren: 0.1, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="max-w-[340px] self-start md:self-end text-left"
+              className="max-w-[340px] self-start md:self-end text-left sm:backdrop-blur-none bg-white/40 md:bg-transparent p-4 md:p-0 rounded-xl"
             >
-              <h3 className="font-display font-black text-2xl md:text-3xl lg:text-[2rem] uppercase leading-[0.92] tracking-tight mb-1 text-foreground flex flex-col items-start">
+              <h3 className="font-display font-black text-4xl md:text-5xl uppercase leading-[0.9] tracking-tight mb-2 text-foreground flex flex-col items-start">
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="Shipped" radius={80} strength={25} />
+                    <TextRepel text="Shipped" radius={90} strength={30} />
                   </motion.div>
                 </div>
                 <div className="overflow-hidden pb-1" style={{ perspective: 1000 }}>
                   <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-                    <TextRepel text="Live" radius={80} strength={25} />
+                    <TextRepel text="Live" radius={90} strength={30} />
                   </motion.div>
                 </div>
               </h3>
-              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-xs md:text-sm text-neutral-700 font-medium leading-relaxed">
+              <motion.p variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-sm md:text-base text-black font-medium leading-relaxed">
                 Multiple production apps deployed on Vercel and Firebase with 95+ Lighthouse performance.
               </motion.p>
             </motion.div>
