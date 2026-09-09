@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 /**
@@ -17,30 +17,28 @@ import { useEffect, useState } from 'react'
  * - Change door colors: Find `className="w-full h-[50vh] bg-black"` and change `bg-black` to `bg-blue-500`.
  */
 export function Preloader({ onComplete, onStartExit }: { onComplete: () => void, onStartExit?: () => void }) {
-  const [progress, setProgress] = useState(0)
+  const [isDone, setIsDone] = useState(false)
+  const progress = useMotionValue(0)
+  
+  // Create smooth motion transforms for the bar and text directly on the GPU
+  const scaleX = useTransform(progress, [0, 100], [0, 1])
+  const progressText = useTransform(progress, (v) => `LOADING ${Math.min(Math.floor(v), 100)}%`)
 
   useEffect(() => {
-    // Force scroll to top on reload so it looks clean
     window.scrollTo(0, 0)
 
-    const timer = setInterval(() => {
-      setProgress(p => {
-        if (p >= 100) {
-          clearInterval(timer)
-          if (onStartExit) onStartExit()
-          // Wait for the new 0.5s delay + 0.9s door animation to finish
-          setTimeout(onComplete, 1600)
-          return 100
-        }
-        // Accelerate at the end for punchy feel
-        return p + (p > 80 ? 8 : 4)
-      })
-    }, 40)
+    const controls = animate(progress, 100, {
+      duration: 2.8,
+      ease: [0.16, 1, 0.3, 1],
+      onComplete: () => {
+        setIsDone(true)
+        if (onStartExit) onStartExit()
+        setTimeout(onComplete, 1600)
+      }
+    })
     
-    return () => {
-      clearInterval(timer)
-    }
-  }, [onComplete])
+    return () => controls.stop()
+  }, [onComplete, onStartExit, progress])
 
   return (
     <div className="fixed inset-0 z-[10000] pointer-events-none flex flex-col">
@@ -48,7 +46,7 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
       <motion.div 
         className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
-        animate={{ y: progress === 100 ? "-100%" : 0 }}
+        animate={{ y: isDone ? "-100%" : 0 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}
       />
       
@@ -56,7 +54,7 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
       <motion.div 
         className="w-full h-[50vh] bg-black"
         initial={{ y: 0 }}
-        animate={{ y: progress === 100 ? "100%" : 0 }}
+        animate={{ y: isDone ? "100%" : 0 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}
       />
 
@@ -65,10 +63,11 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-[10001] px-4 overflow-hidden"
         initial={{ opacity: 1, scale: 1 }}
         animate={{ 
-          opacity: progress === 100 ? 0 : 1, 
-          scale: progress === 100 ? 1.05 : 1,
-          filter: progress === 100 ? "blur(10px)" : "blur(0px)" 
+          opacity: isDone ? 0 : 1, 
+          scale: isDone ? 1.05 : 1,
+          filter: isDone ? "blur(10px)" : "blur(0px)"
         }}
+        style={{ willChange: "transform, opacity, filter" }}
         transition={{ duration: 0.5, ease: "easeIn", delay: 0.3 }}
       >
         <div className="relative flex flex-col items-center w-full max-w-5xl mx-auto">
@@ -92,6 +91,7 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
                   visible: { x: 0, opacity: 1, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
                 }}
                 className="inline-block"
+                style={{ willChange: "transform, opacity, filter" }}
               >
                 {char}
               </motion.span>
@@ -102,15 +102,14 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
           <div className="w-full max-w-[200px] md:max-w-[400px] h-[2px] bg-neutral-900 mt-8 rounded-full overflow-hidden">
             <motion.div 
               className="h-full bg-white origin-left"
-              animate={{ scaleX: progress / 100 }}
-              transition={{ ease: "linear", duration: 0.1 }}
+              style={{ scaleX }}
             />
           </div>
 
           {/* Percentage */}
-          <div className="mt-4 text-neutral-500 font-bold text-[10px] md:text-xs tracking-[0.2em] uppercase">
-            Loading {Math.min(progress, 100)}%
-          </div>
+          <motion.div className="mt-4 text-neutral-500 font-bold text-[10px] md:text-xs tracking-[0.2em] uppercase">
+            {progressText}
+          </motion.div>
         </div>
       </motion.div>
     </div>

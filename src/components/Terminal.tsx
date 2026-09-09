@@ -317,7 +317,7 @@ export function Terminal() {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        onClick={() => inputRef.current?.focus()}
+        onClick={() => inputRef.current?.focus({ preventScroll: true })}
         className="w-full max-w-4xl mx-auto bg-[#0d1117] border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl cursor-text"
         data-cursor="text"
       >
@@ -377,7 +377,6 @@ export function Terminal() {
                   className="w-full bg-transparent outline-none border-none text-white text-xs md:text-sm font-mono caret-transparent"
                   autoComplete="off"
                   spellCheck={false}
-                  autoFocus
                 />
                 {/* Blinking block cursor */}
                 <span

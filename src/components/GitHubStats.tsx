@@ -7,7 +7,7 @@
  * INSTRUCTOR NOTE / HOW TO MODIFY:
  * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
  */
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { TextRepel } from './TextRepel'
 
@@ -66,35 +66,32 @@ function StatCard({ label, value, loading, delay, suffix, icon }: {
 }
 
 /* ── Contribution heatmap (generated, GitHub-style) ────── */
-function ContributionHeatmap() {
+function ContributionHeatmap({ username }: { username: string }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
+  const [cells, setCells] = useState<number[][]>([])
 
-  // Generate 52 weeks × 7 days of plausible contribution data
-  const cells = useMemo(() => {
-    const weeks = 52
-    const data: number[][] = []
-    const seed = (n: number) => ((Math.sin(n * 9301 + 49297) * 233280) % 1 + 1) % 1
-
-    for (let w = 0; w < weeks; w++) {
-      const week: number[] = []
-      for (let d = 0; d < 7; d++) {
-        const idx = w * 7 + d
-        const dayOfWeek = d
-        // Weekends slightly lower, recent weeks higher
-        const recency = (w / weeks) * 0.6
-        const weekend = (dayOfWeek === 0 || dayOfWeek === 6) ? 0.5 : 1
-        const v = seed(idx) * weekend + recency
-        // Quantize to 0-4 levels (GitHub style)
-        week.push(v < 0.25 ? 0 : v < 0.45 ? 1 : v < 0.65 ? 2 : v < 0.82 ? 3 : 4)
-      }
-      // Future days = 0
-      const daysFromEnd = (weeks - w - 1) * 7
-      if (daysFromEnd < 0) week.fill(0)
-      data.push(week)
-    }
-    return data
-  }, [])
+  useEffect(() => {
+    fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`)
+      .then(r => r.json())
+      .then(d => {
+        const flat = d.contributions;
+        if (!flat || flat.length === 0) return;
+        
+        const firstDate = new Date(flat[0].date);
+        const dayOfWeek = firstDate.getDay(); 
+        
+        const padded: number[] = Array(dayOfWeek).fill(0);
+        flat.forEach((c: any) => padded.push(c.level));
+        
+        const weeks: number[][] = [];
+        for (let i = 0; i < padded.length; i += 7) {
+          weeks.push(padded.slice(i, i + 7));
+        }
+        setCells(weeks);
+      })
+      .catch(() => setCells([]));
+  }, [username])
 
   const LEVELS = [
     'bg-neutral-100',
@@ -105,28 +102,30 @@ function ContributionHeatmap() {
   ]
 
   return (
-    <div ref={ref} className="overflow-x-auto">
-      <div className="flex gap-[3px] min-w-max">
-        {cells.map((week, wi) => (
-          <div key={wi} className="flex flex-col gap-[3px]">
-            {week.map((level, di) => (
-              <motion.div
-                key={di}
-                className={`w-3 h-3 rounded-[2px] ${LEVELS[level]}`}
-                initial={{ opacity: 0, scale: 0.4 }}
-                animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.4 }}
-                transition={{ duration: 0.3, delay: inView ? (wi * 7 + di) * 0.002 : 0 }}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center justify-end gap-1.5 mt-2">
-        <span className="text-[10px] text-neutral-400 font-medium mr-1">Less</span>
-        {LEVELS.map((cls, i) => (
-          <div key={i} className={`w-3 h-3 rounded-[2px] ${cls}`} />
-        ))}
-        <span className="text-[10px] text-neutral-400 font-medium ml-1">More</span>
+    <div ref={ref} className="w-full overflow-x-auto pb-2 custom-scrollbar">
+      <div className="flex flex-col md:items-center min-w-max mx-auto w-fit">
+        <div className="flex gap-[3px]">
+          {cells.map((week, wi) => (
+            <div key={wi} className="flex flex-col gap-[3px]">
+              {week.map((level, di) => (
+                <motion.div
+                  key={di}
+                  className={`w-3 h-3 rounded-[2px] ${LEVELS[level]}`}
+                  initial={{ opacity: 0, scale: 0.4 }}
+                  animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.4 }}
+                  transition={{ duration: 0.3, delay: inView ? (wi * 7 + di) * 0.002 : 0 }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-end w-full gap-1.5 mt-3">
+          <span className="text-[10px] text-neutral-400 font-medium mr-1">Less</span>
+          {LEVELS.map((cls, i) => (
+            <div key={i} className={`w-3 h-3 rounded-[2px] ${cls}`} />
+          ))}
+          <span className="text-[10px] text-neutral-400 font-medium ml-1">More</span>
+        </div>
       </div>
     </div>
   )
@@ -226,7 +225,7 @@ export function GitHubStats({ username = 'rajashekharexe' }: { username?: string
             </p>
             <span className="text-[11px] font-semibold text-neutral-400">Last 12 months</span>
           </div>
-          <ContributionHeatmap />
+          <ContributionHeatmap username={username} />
         </motion.div>
 
       </div>

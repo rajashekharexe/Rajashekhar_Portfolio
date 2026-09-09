@@ -77,9 +77,10 @@ function App() {
       document.body.style.overflow = 'hidden'
       document.body.style.paddingRight = `${scrollbarWidth}px`
     } else {
-      // Restore scroll and padding
+      // Restore scroll and padding, ensure page starts at the top
       document.body.style.overflow = ''
       document.body.style.paddingRight = ''
+      window.scrollTo(0, 0)
     }
   }, [loading])
 
