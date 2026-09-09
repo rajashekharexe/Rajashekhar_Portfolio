@@ -130,29 +130,43 @@ export function Experience() {
           <div className="relative bg-white/50 backdrop-blur-md border border-neutral-200/50 p-8 md:p-12 rounded-[2rem] shadow-xl">
             <span className="absolute -top-12 -left-4 md:-left-8 text-[10rem] font-display font-black text-neutral-200 leading-none h-10 select-none z-0">"</span>
 
-            <p className="text-xl md:text-2xl text-neutral-900 font-medium leading-relaxed relative z-10 mb-8">
-              I am currently pursuing my BCA with a deep passion for software engineering, concentrating my energy directly on{' '}
-              <strong className="text-black border-b border-black pb-1">building real-world applications.</strong>
+            <p className="text-xl md:text-2xl text-neutral-900 font-medium leading-relaxed relative z-10 mb-6">
+              I am a final-year <strong className="text-black border-b border-black pb-1">BCA student at A S Patil College of Commerce</strong>, concentrating my energy directly on system architecture and responsive web engineering.
             </p>
-            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-8 relative z-10">
-              While I may be at the beginning of my professional journey, I haven't waited for graduation to start engineering. I've dedicated my time to architecting full-stack web platforms, integrating generative AI applications, and deploying real-time socket environments from the ground up.
+            <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6 relative z-10">
+              I specialize in designing robust database schemas and security rules in Firebase & MongoDB, pairing foundational web technologies with Google Antigravity to build scalable React, TypeScript, and Three.js applications.
             </p>
-            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed relative z-10 mb-12">
-              I am a rapid learner, deeply obsessed with clean code and flawless UI/UX, and I am actively looking for opportunities to bring my dedication and developer mindset to a forward-thinking codebase.
-            </p>
+            
+            {/* Timeline / Highlights */}
+            <div className="space-y-4 mb-8 relative z-10 text-sm md:text-base">
+              <div className="flex items-start gap-3">
+                <span className="text-amber-500 font-black text-lg">🏆</span>
+                <div>
+                  <strong className="text-neutral-900 font-bold">4th Place (out of 69 Teams) — IEEE AI Arena 2.0</strong>
+                  <p className="text-neutral-500 text-xs md:text-sm">Built and shipped an AI educational web app under hackathon constraints; judged in the top 6% on architecture and UX.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-blue-500 font-black text-lg">🎯</span>
+                <div>
+                  <strong className="text-neutral-900 font-bold">Academic Distinction in Computer Science (95/100)</strong>
+                  <p className="text-neutral-500 text-xs md:text-sm">Class 12 (PUC) at V B Darbar PU College with an 81% aggregate score.</p>
+                </div>
+              </div>
+            </div>
 
-            <div className="grid grid-cols-2 gap-8 border-t border-neutral-200 pt-10 relative z-10">
+            <div className="grid grid-cols-2 gap-8 border-t border-neutral-200 pt-8 relative z-10">
               <div>
-                <span className="block text-5xl font-display font-black text-neutral-900 mb-2 flex">
-                  <TextRepel text="100%" radius={80} strength={25} />
+                <span className="block text-4xl md:text-5xl font-display font-black text-neutral-900 mb-1 flex">
+                  <TextRepel text="Top 6%" radius={80} strength={25} />
                 </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">Dedicated Learner</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">IEEE Hackathon</span>
               </div>
               <div>
-                <span className="block text-5xl font-display font-black text-neutral-900 mb-2 flex">
-                  <TextRepel text="24/7" radius={80} strength={25} />
+                <span className="block text-4xl md:text-5xl font-display font-black text-neutral-900 mb-1 flex">
+                  <TextRepel text="95/100" radius={80} strength={25} />
                 </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">Builder Mindset</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">CS Distinction</span>
               </div>
             </div>
           </div>

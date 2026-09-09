@@ -5,7 +5,7 @@ import { MagneticButton } from './MagneticButton'
 import { TextRepel } from './TextRepel'
 import DotField from './DotField'
 
-const MY_EMAIL = 'amogsiddaamarappagol@gmail.com'
+const MY_EMAIL = 'rajashekhar.exe@gmail.com'
 
 // Generic SVGs to avoid Lucide version mismatch errors
 const GithubIcon = ({ className }: { className?: string }) => (

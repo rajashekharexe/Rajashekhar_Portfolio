@@ -4,6 +4,7 @@ import { TextRepel } from './TextRepel'
 const PURPLE = '#6366F1'
 const GREEN  = '#22C55E'
 const ORANGE = '#F97316'
+const BLUE   = '#2563EB'
 
 /**
  * AIWidget
@@ -164,9 +165,9 @@ export function Skills() {
           {/* ② Stats */}
           <div className="flex flex-wrap gap-2.5">
             {[
-              { emoji: '🏆', value: '5+',  label: 'Projects' },
-              { emoji: '💻', value: '3+',  label: 'Years Coding' },
-              { emoji: '🚀', value: 'AI',  label: 'Enthusiast' },
+              { emoji: '🏆', value: 'Top 6%', label: 'IEEE AI Arena 2.0' },
+              { emoji: '🎯', value: '95/100', label: 'Class 12 CS' },
+              { emoji: '🎓', value: '2027',   label: 'BCA Final Year' },
             ].map(s => (
               <div key={s.label} className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-neutral-100 shadow-sm">
                 <span className="text-sm">{s.emoji}</span>
@@ -180,19 +181,23 @@ export function Skills() {
 
           {/* ③ Skill badge cards */}
           <div>
-            <p className="text-[9.5px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-3">My Skills</p>
-            <div className="grid grid-cols-3 gap-3">
+            <p className="text-[9.5px] font-black uppercase tracking-[0.2em] text-neutral-400 mb-3">Technical Competencies</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <SkillCard
-                emoji="⚡" title="Languages" color={PURPLE}
-                skills={['C', 'Python', 'TypeScript', 'JavaScript']}
+                emoji="⚡" title="Core & Languages (Hands-on)" color={PURPLE}
+                skills={['HTML5', 'CSS3', 'JavaScript', 'Python', 'SQL']}
               />
               <SkillCard
-                emoji="🌐" title="Web Dev" color={GREEN}
-                skills={['React', 'Next.js', 'Node.js', 'HTML & CSS', 'Tailwind', 'Express']}
+                emoji="🗄️" title="Backend & Databases" color={GREEN}
+                skills={['Firebase', 'Firestore', 'Auth', 'MongoDB', 'REST APIs', 'System Design']}
               />
               <SkillCard
-                emoji="🤖" title="AI & Tools" color={ORANGE}
-                skills={['LLM APIs', 'Prompt Eng.', 'AI Workflows', 'OpenCV', 'TensorFlow']}
+                emoji="🤖" title="AI-Assisted Frameworks" color={ORANGE}
+                skills={['React.js', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Three.js / R3F']}
+              />
+              <SkillCard
+                emoji="🛠️" title="Tools & Platforms" color={BLUE}
+                skills={['Google Antigravity', 'Git', 'GitHub', 'VS Code', 'Vercel']}
               />
             </div>
           </div>

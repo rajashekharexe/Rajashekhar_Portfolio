@@ -24,34 +24,37 @@ interface Project {
 const projects: Project[] = [
   {
     title: "Apex",
-    subtitle: "Career OS & Neural Study Engine",
-    description: "An AI-architected next-generation Career OS — rebuilt from the ground up. Engineered using advanced AI workflows to achieve seamless interactive physics, a powerful neural study engine, and flawless scroll interactions at 60fps.",
-    tech: ["React Three Fiber", "AI APIs", "GSAP"],
+    subtitle: "AI-Powered Career Planning Platform",
+    description: "Designed the end-to-end system architecture and user experience for a 3D career roadmap platform that synthesizes adaptive 30-day technical curriculums via LLM APIs. Built in React Three Fiber with geometry instancing sustaining locked 60 FPS performance.",
+    tech: ["Google Antigravity", "React Three Fiber", "TypeScript", "LLM APIs", "GSAP"],
     image: "/project-1.png",
     gif: "/project-1.gif",
     link: "https://github.com/rajashekharexe"
   },
   {
-    title: "ChatWave",
-    description: "A high-performance, real-time messaging ecosystem built via AI-assisted engineering. Features robust WebSocket architecture, secure authentication, and instant cross-platform media delivery.",
-    tech: ["Node.js", "Express", "Socket.io", "React"],
-    image: "/project-2.png",
-    link: "https://github.com/rajashekharexe/ChatWave"
-  },
-  {
-    title: "Face Attendance System",
-    description: "A seamless computer vision architecture utilizing AI-generated Python scripts and modern web frameworks to provide instant facial recognition and automated real-time attendance tracking.",
-    tech: ["Python", "OpenCV", "TensorFlow"],
-    image: "/project-3.png",
-    link: "https://github.com/rajashekharexe/face-attendance"
-  },
-  {
     title: "KAD Multiplier",
-    description: "An AI-developed full-stack e-commerce platform with real-time product management, secure user authentication, and a seamless shopping experience powered by Firebase's live database and hosting infrastructure.",
-    tech: ["React", "Firebase", "Firestore", "Tailwind CSS"],
+    subtitle: "Full-Stack Agricultural E-Commerce",
+    description: "Architected database schemas, security rules, and customer checkout flows for a live agricultural e-commerce application. Configured real-time Cloud Firestore snapshot listeners and secure Firebase Authentication to synchronize inventory across active sessions.",
+    tech: ["Firebase", "Firestore", "React", "HTML/CSS", "Tailwind CSS"],
     image: "/project-3.png",
     gif: "/project-4.gif",
     link: "https://github.com/rajashekharexe"
+  },
+  {
+    title: "Developer Portfolio",
+    subtitle: "3D Interactive Web Application",
+    description: "Designed and deployed a personal portfolio featuring interactive WebGL particle systems, responsive canvas shaders, and a built-in terminal emulator. Achieved 95+ score on Google Lighthouse audits through aggressive code-splitting and asset compression.",
+    tech: ["Google Antigravity", "React", "TypeScript", "Three.js", "Vite", "Framer Motion"],
+    image: "/project-2.png",
+    link: "https://rajashekhar-portfolio-iota.vercel.app"
+  },
+  {
+    title: "Face Attendance System",
+    subtitle: "Computer Vision Recognition Pipeline",
+    description: "A seamless computer vision architecture utilizing Python, OpenCV, and modern web frameworks to deliver automated facial recognition and real-time attendance verification.",
+    tech: ["Python", "OpenCV", "TensorFlow", "Computer Vision"],
+    image: "/project-3.png",
+    link: "https://github.com/rajashekharexe/face-attendance"
   }
 ]
 
