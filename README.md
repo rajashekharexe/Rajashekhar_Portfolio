@@ -59,10 +59,6 @@ I am passionate about designing systems and building clean, responsive web appli
 - Achieved a 95+ score on Google Lighthouse audits through aggressive code-splitting, asset compression, and deferred bundle loading.
 - Created fluid spring physics with Framer Motion, ensuring smooth responsive navigation across mobile and desktop.
 
-### 4. [Face Attendance System — Computer Vision Pipeline](https://github.com/rajashekharexe/face-attendance)
-> **Stack:** Python · OpenCV · TensorFlow · Computer Vision
-- Built an automated facial recognition and real-time attendance verification pipeline utilizing computer vision algorithms.
-
 ---
 
 ## ⚡ Engineering & Architecture Highlights

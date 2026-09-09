@@ -96,10 +96,6 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'output',  text: '       Interactive WebGL physics, canvas shaders & built-in shell' },
     { type: 'output',  text: '       Stack: React · TypeScript · Three.js · Vite · Framer Motion' },
     { type: 'spacer',  text: '' },
-    { type: 'success', text: '  [04] FACE ATTENDANCE SYSTEM — Computer Vision' },
-    { type: 'output',  text: '       Automated real-time attendance tracking with OpenCV & TensorFlow' },
-    { type: 'output',  text: '       Stack: Python · OpenCV · TensorFlow' },
-    { type: 'spacer',  text: '' },
   ],
 
   experience: () => [

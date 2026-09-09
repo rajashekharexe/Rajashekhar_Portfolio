@@ -60,25 +60,43 @@ function RepelLetter({
     // ── Cache absolute document position (no DOM read in hot path) ──────────
     // Stores the letter's center in DOCUMENT coordinates (adds scrollY)
     const absCenter = useRef({ x: 0, y: 0 });
+    const isInitialized = useRef(false);
 
     const readPos = useCallback(() => {
         if (!ref.current) return;
         const r = ref.current.getBoundingClientRect();
+        // If element has no dimensions yet, it's not rendered / styled properly
+        if (r.width === 0 || r.height === 0) return;
+
         absCenter.current = {
-            x: r.left + r.width  / 2 + window.scrollX,
-            y: r.top  + r.height / 2 + window.scrollY,
+            x: r.left + r.width  / 2 + window.scrollX - springX.get(),
+            y: r.top  + r.height / 2 + window.scrollY - springY.get(),
         };
-    }, []);
+        isInitialized.current = true;
+    }, [springX, springY]);
 
     useEffect(() => {
         // ── Hot path: only reads JS values — zero DOM queries ───────────────
         const update = () => {
-            // Convert cached absolute pos → current viewport pos (cheap)
+            // If not yet properly initialized, attempt reading position on demand
+            if (!isInitialized.current) {
+                readPos();
+                if (!isInitialized.current) return;
+            }
+
             const lx = absCenter.current.x - window.scrollX - springX.get();
             const ly = absCenter.current.y - window.scrollY - springY.get();
 
             const mx = mouseX.get();
             const my = mouseY.get();
+
+            // Ignore offscreen or unset cursor
+            if (mx < -5000 || my < -5000) {
+                x.set(0);
+                y.set(0);
+                return;
+            }
+
             const dx = lx - mx;
             const dy = ly - my;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -98,18 +116,39 @@ function RepelLetter({
         // Initial cache population
         readPos();
 
-        // Refresh cache only on scroll / resize (infrequent)
-        window.addEventListener("scroll", readPos,  { passive: true });
-        window.addEventListener("resize", readPos,  { passive: true });
+        // 1. Re-read when web fonts finish loading
+        if (typeof document !== "undefined" && document.fonts) {
+            document.fonts.ready.then(readPos);
+        }
+
+        // 2. Scheduled calibrations across preloader exit & entrance animations
+        const t1 = setTimeout(readPos, 150);
+        const t2 = setTimeout(readPos, 450);
+        const t3 = setTimeout(readPos, 850);
+        const t4 = setTimeout(readPos, 1300);
+        const t5 = setTimeout(readPos, 1900);
+        const t6 = setTimeout(readPos, 2600);
+
+        // 3. Refresh cache on scroll, resize, and on-demand container sync
+        window.addEventListener("scroll", readPos, { passive: true });
+        window.addEventListener("resize", readPos, { passive: true });
+        window.addEventListener("text-repel-sync", readPos, { passive: true });
 
         const unsub1 = mouseX.on("change", update);
         const unsub2 = mouseY.on("change", update);
 
         return () => {
+            clearTimeout(t1);
+            clearTimeout(t2);
+            clearTimeout(t3);
+            clearTimeout(t4);
+            clearTimeout(t5);
+            clearTimeout(t6);
             unsub1();
             unsub2();
             window.removeEventListener("scroll", readPos);
             window.removeEventListener("resize", readPos);
+            window.removeEventListener("text-repel-sync", readPos);
         };
     }, [mouseX, mouseY, radius, strength, mode, x, y, springX, springY, readPos]);
 
@@ -170,10 +209,15 @@ export function TextRepel({
         };
     }, [mouseX, mouseY, isInView]);
 
+    const handleMouseEnter = () => {
+        window.dispatchEvent(new CustomEvent("text-repel-sync"));
+    };
+
     return (
         <div
             ref={containerRef}
             data-text-repel
+            onMouseEnter={handleMouseEnter}
             className={cn(
                 "inline-flex flex-wrap items-center justify-center cursor-default select-none",
                 className

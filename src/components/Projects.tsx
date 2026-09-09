@@ -47,14 +47,6 @@ const projects: Project[] = [
     tech: ["Google Antigravity", "React", "TypeScript", "Three.js", "Vite", "Framer Motion"],
     image: "/project-2.png",
     link: "https://rajashekhar-portfolio-iota.vercel.app"
-  },
-  {
-    title: "Face Attendance System",
-    subtitle: "Computer Vision Recognition Pipeline",
-    description: "A seamless computer vision architecture utilizing Python, OpenCV, and modern web frameworks to deliver automated facial recognition and real-time attendance verification.",
-    tech: ["Python", "OpenCV", "TensorFlow", "Computer Vision"],
-    image: "/project-3.png",
-    link: "https://github.com/rajashekharexe/face-attendance"
   }
 ]
 
