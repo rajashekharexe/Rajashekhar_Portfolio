@@ -29,19 +29,8 @@ const MailIcon = ({ className }: { className?: string }) => (
 )
 
 /**
- * Contact Section Component
- * 
- * WHAT IT DOES:
- * Renders the final section of the website with the interactive DotField background, 
- * the social links, and the contact form.
- * 
- * HOW IT WORKS:
- * When a user fills out the form and clicks "Send", it doesn't use a backend database. 
- * Instead, it uses `mailto:` to automatically open their computer's email client (like Outlook or Apple Mail)
- * with your email address and their message pre-filled.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - Change the email address: Scroll up to the top of this file and change `const MY_EMAIL = '...'`.
+ * Contact Section
+ * Particle field canvas backdrop, interactive mail dispatch, and social profiles.
  */
 export function Contact() {
   const containerRef = useRef<HTMLDivElement>(null)

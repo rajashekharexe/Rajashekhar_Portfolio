@@ -3,19 +3,8 @@ import { useRef, useCallback, useEffect } from 'react'
 import { TextRepel } from './TextRepel'
 
 /**
- * Experience Section Component
- * 
- * WHAT IT DOES:
- * Displays your work history and timeline. It features an interactive "spotlight" effect 
- * where hovering over the dark timeline reveals a bright, colored version underneath the mouse.
- * 
- * HOW IT WORKS:
- * 1. Tracks mouse movement via `useMotionValue` (no React re-renders = high performance).
- * 2. Uses a CSS `clip-path` circle mapped to the mouse coordinates to reveal a duplicated, bright version of the timeline layer.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks you to add a new job experience, scroll down inside this file and find the `experiences` array. Add a new object `{ year, role, company, desc }` there.
- * - To disable the spotlight effect, simply delete the `<motion.div>` that has `style={{ clipPath }}`.
+ * Experience Section
+ * Work philosophy and technical milestones with dynamic cursor mask reveals.
  */
 export function Experience() {
   const containerRef = useRef<HTMLDivElement>(null)

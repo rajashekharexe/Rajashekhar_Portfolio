@@ -7,91 +7,78 @@ import LiquidMedia from './LiquidMedia'
 import { useSoundEffects } from '../hooks/useSoundEffects'
 
 /**
- * Project Interface & Data Array
- * 
- * WHAT IT DOES:
- * This section holds all the data for your projects (title, description, video/image, tech stack).
- * 
- * HOW IT WORKS:
- * Instead of copy-pasting the HTML for every single project, we store the data in this `projects` array,
- * and then use `projects.map(...)` lower down in the file to automatically generate a card for each one.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - To add a new project, simply copy one of the objects inside the `const projects = [...]` array and paste it at the end. Change the text, image path, and video path.
- * - To remove a project, delete its object from the array.
+ * Project Data Architecture
+ * Structured metadata for showcased production systems and interactive applications.
  */
 interface Project {
   title: string
   subtitle?: string
   description: string
   tech: string[]
-  video: string   // e.g. "/videos/project-1.mp4"
+  video?: string  // optional video file path
   image: string   // fallback thumbnail shown before video/gif loads
   gif?: string    // optional GIF — autoplays without hover (e.g. "/project-1.gif")
-  link?: string   // optional live link
+  link?: string   // live or repository link
 }
 
 const projects: Project[] = [
   {
     title: "Apex",
-    subtitle: "Successor to SkillForge AI",
+    subtitle: "Career OS & Neural Study Engine",
     description: "An AI-architected next-generation Career OS — rebuilt from the ground up. Engineered using advanced AI workflows to achieve seamless interactive physics, a powerful neural study engine, and flawless scroll interactions at 60fps.",
     tech: ["React Three Fiber", "AI APIs", "GSAP"],
-    video: "/videos/project-1.mp4",
     image: "/project-1.png",
     gif: "/project-1.gif",
-    // link: "https://apex.ai"
+    link: "https://github.com/rajashekharexe"
   },
   {
     title: "ChatWave",
     description: "A high-performance, real-time messaging ecosystem built via AI-assisted engineering. Features robust WebSocket architecture, secure authentication, and instant cross-platform media delivery.",
     tech: ["Node.js", "Express", "Socket.io", "React"],
-    video: "/videos/project-2.mp4",
     image: "/project-2.png",
-    // link: "https://chatwave.app"
+    link: "https://github.com/rajashekharexe/ChatWave"
   },
   {
     title: "Face Attendance System",
     description: "A seamless computer vision architecture utilizing AI-generated Python scripts and modern web frameworks to provide instant facial recognition and automated real-time attendance tracking.",
     tech: ["Python", "OpenCV", "TensorFlow"],
-    video: "/videos/project-3.mp4",
     image: "/project-3.png",
-    // link: "https://github.com/rajashekharexe/face-attendance"
+    link: "https://github.com/rajashekharexe/face-attendance"
   },
   {
     title: "KAD Multiplier",
     description: "An AI-developed full-stack e-commerce platform with real-time product management, secure user authentication, and a seamless shopping experience powered by Firebase's live database and hosting infrastructure.",
     tech: ["React", "Firebase", "Firestore", "Tailwind CSS"],
-    video: "/videos/project-4.mp4",
     image: "/project-3.png",
     gif: "/project-4.gif",
-    // link: "https://kad-multiplier.web.app"
+    link: "https://github.com/rajashekharexe"
   }
 ]
 
-// Premium browser-frame media player — supports GIF (autoplay) and MP4 (hover-to-play)
+// Premium browser-frame media player — supports GIF (autoplay) and fluid interactive canvas
 function ProjectMedia({ project }: { project: Project }) {
   const { playHover } = useSoundEffects()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoFailed, setVideoFailed] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
 
+  const hasVideo = Boolean(project.video)
   const isGif = Boolean(project.gif)
 
   const handleMouseEnter = () => {
     playHover()
-    if (!isGif && videoRef.current && !videoFailed) {
+    if (hasVideo && !isGif && videoRef.current && !videoFailed) {
       videoRef.current.play().catch(() => setVideoFailed(true))
-      setIsPlaying(true)
     }
+    setIsPlaying(true)
   }
 
   const handleMouseLeave = () => {
-    if (!isGif && videoRef.current && !videoFailed) {
+    if (hasVideo && !isGif && videoRef.current && !videoFailed) {
       videoRef.current.pause()
       videoRef.current.currentTime = 0
-      setIsPlaying(false)
     }
+    setIsPlaying(false)
   }
 
   return (
@@ -107,7 +94,7 @@ function ProjectMedia({ project }: { project: Project }) {
         <span className="w-3 h-3 rounded-full bg-amber-400 flex-shrink-0" />
         <span className="w-3 h-3 rounded-full bg-green-400 flex-shrink-0" />
         <div className="ml-3 flex-1 bg-white rounded-md px-3 py-1 text-xs font-mono text-neutral-400 truncate border border-neutral-200">
-          {project.link ? project.link.replace('https://', '') : `localhost:3000 / ${project.title.toLowerCase().replace(/ /g, '-')}`}
+          {project.link ? project.link.replace('https://', '') : `github.com/rajashekharexe/${project.title.toLowerCase().replace(/ /g, '-')}`}
         </div>
         {/* LIVE badge */}
         {project.link && (
@@ -136,7 +123,7 @@ function ProjectMedia({ project }: { project: Project }) {
         ) : (
           <>
             {/* The actual video is visually hidden but plays in the DOM for the WebGL texture */}
-            {!videoFailed && (
+            {hasVideo && !videoFailed && (
               <video
                 ref={videoRef}
                 src={project.video}

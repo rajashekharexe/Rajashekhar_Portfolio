@@ -1,11 +1,6 @@
 /**
  * DotField Component
- * 
- * WHAT IT DOES:
- * Renders the DotField UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ * High-performance 2D Canvas particle grid with cursor proximity vector dynamics.
  */
 import { useEffect, useRef, memo } from 'react'
 import './DotField.css'

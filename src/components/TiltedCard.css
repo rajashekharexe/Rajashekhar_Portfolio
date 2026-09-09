@@ -1,12 +1,5 @@
 /**
- * TiltedCard CSS Styles
- * 
- * WHAT IT DOES:
- * This handles the pure CSS parts of the 3D project cards (like `perspective` and `preserve-3d`).
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - The `perspective: 1200px` determines how "extreme" the 3D effect looks. A lower number makes it look more distorted.
- * - The `tilted-card-caption` handles the styling for the tooltip that follows your mouse over the card.
+ * TiltedCard 3D Perspective Styles
  */
 .tilted-card-figure {
   position: relative;

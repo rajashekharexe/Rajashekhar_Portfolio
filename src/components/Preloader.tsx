@@ -2,19 +2,8 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 /**
- * Preloader
- * 
- * WHAT IT DOES:
- * Shows a loading screen with a progress bar. Once it hits 100%, the black "vault" 
- * doors split open (one goes up, one goes down) to reveal the website underneath.
- * 
- * HOW IT WORKS:
- * Uses `setInterval` to fake loading progress. `progress` controls the width of the 
- * loading bar. When `progress === 100`, Framer Motion triggers the exit animations.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - Change loading speed: Scroll down to `setInterval` and change `40` to a higher number (e.g. 100) to make it slower.
- * - Change door colors: Find `className="w-full h-[50vh] bg-black"` and change `bg-black` to `bg-blue-500`.
+ * Preloader Component
+ * High-performance vault door entrance animation with GPU-accelerated motion values.
  */
 export function Preloader({ onComplete, onStartExit }: { onComplete: () => void, onStartExit?: () => void }) {
   const [isDone, setIsDone] = useState(false)

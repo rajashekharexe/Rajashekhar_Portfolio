@@ -1,11 +1,6 @@
 /**
  * SmoothScroll Component
- * 
- * WHAT IT DOES:
- * Renders the SmoothScroll UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ * Integrates Lenis smooth scrolling with inertia lerping for high refresh rate viewports.
  */
 import { ReactLenis } from 'lenis/react'
 import type { ReactNode } from 'react'

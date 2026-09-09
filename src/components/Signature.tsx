@@ -97,10 +97,6 @@ export function Signature({
 
         setPaths(newPaths);
         setWidth(x + horizontalPadding);
-        console.log("Signature loaded successfully. Text:", text, "Paths count:", newPaths.length, "Calculated width:", x + horizontalPadding);
-        if (newPaths.length > 0) {
-          console.log("First path preview:", newPaths[0].substring(0, 60));
-        }
       } catch (error) {
         console.error("Signature component font load error:", error);
         setPaths([]);

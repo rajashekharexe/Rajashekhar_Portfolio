@@ -6,18 +6,8 @@ const GREEN  = '#22C55E'
 const ORANGE = '#F97316'
 
 /**
- * AIWidget (Inner Component)
- * 
- * WHAT IT DOES:
- * This renders the "AI Core" widget with the spinning geometric rings and the "System Status" box.
- * 
- * HOW IT WORKS:
- * Uses Framer Motion's `animate={{ rotate: 360 }}` combined with `repeat: Infinity` to create
- * continuously spinning SVG rings.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - To stop the spinning, remove the `animate={{ rotate: 360 }}` prop from the `<motion.svg>` tags.
- * - To change the pulsing green light, look for `bg-green-500` inside the "System Status" block.
+ * AIWidget
+ * Animated SVG gyroscope and telemetry heartbeat indicator.
  */
 function AIWidget() {
   return (
@@ -100,19 +90,8 @@ function SkillCard({ emoji, title, color, skills }: {
 }
 
 /**
- * Skills Section (Main Component)
- * 
- * WHAT IT DOES:
- * Displays your technical skills grid alongside your photo and the custom AI Widget.
- * 
- * HOW IT WORKS:
- * The layout uses CSS Grid (`grid-cols-12`). The left side takes 4 columns (`col-span-4`),
- * and the right side takes 8 columns (`col-span-8`). 
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - Change the main photo: Find `<img src="/skills-image.png" />` and change the `src`.
- * - Add a new skill category: You would add a new `<div className="bg-white rounded-xl ...">` block inside the right column.
- * - Change heading text: The heading uses `<TextRepel>`. Change the `text` prop to change the words.
+ * Skills Section
+ * Technical proficiency matrix categorized into language, web, database, AI, and devops layers.
  */
 export function Skills() {
   return (

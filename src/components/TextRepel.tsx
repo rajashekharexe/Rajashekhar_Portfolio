@@ -22,19 +22,9 @@ interface TextRepelProps {
 }
 
 /**
- * RepelLetter (Inner Component)
- * 
- * WHAT IT DOES:
- * This is the physics engine for a single letter. It calculates how far the mouse is
- * from the letter and pushes the letter away using a Spring animation.
- * 
- * HOW IT WORKS (THE MATH):
- * 1. It calculates the distance between the mouse (mx, my) and the letter's center (lx, ly) using the Pythagorean theorem (`Math.sqrt(dx*dx + dy*dy)`).
- * 2. If the distance is less than the `radius`, it calculates a `force` multiplier. The closer the mouse, the stronger the force.
- * 3. It uses `Math.atan2` to find the exact angle the letter should fly away in, and applies the force to the Spring X and Y coordinates.
- * 
- * INSTRUCTOR NOTE:
- * If your sir asks "How did you optimize this?", tell him: "I cached the absolute position of every letter in a `useRef` so we don't have to query the DOM (`getBoundingClientRect`) on every single mouse move. We only run the pure math inside the Framer Motion `on("change")` listener."
+ * RepelLetter
+ * Calculates continuous Euclidean distance and angular trajectory vector
+ * relative to the cursor, driving spring-damped displacements.
  */
 function RepelLetter({
     letter,
@@ -140,19 +130,8 @@ function RepelLetter({
 }
 
 /**
- * TextRepel (Main Component)
- * 
- * WHAT IT DOES:
- * Takes a string of text (like "Technical Arsenal") and splits it into individual letters,
- * wrapping each one in the `RepelLetter` physics component above.
- * 
- * HOW IT WORKS:
- * It tracks the global mouse position `onMouseMove` on the parent container and passes 
- * those coordinates down to every single letter via `useMotionValue`.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to make the letters scatter further away, increase the `strength` prop (e.g. 100).
- * - If sir asks to make the letters react from further away, increase the `radius` prop.
+ * TextRepel
+ * Deconstructs string streams into discrete typography nodes mapped to global cursor vector fields.
  */
 export function TextRepel({
     text,

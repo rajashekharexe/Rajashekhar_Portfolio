@@ -1,11 +1,6 @@
 /**
  * Grain Component
- * 
- * WHAT IT DOES:
- * Renders the Grain UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ * Subtle tactile analog noise overlay generated via SVG fractal turbulence.
  */
 export function Grain() {
   return (

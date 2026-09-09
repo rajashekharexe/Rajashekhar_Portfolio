@@ -4,19 +4,7 @@ import { TextRepel } from './TextRepel'
 
 /**
  * Hero Section
- * 
- * WHAT IT DOES:
- * This is the very first section the user sees (the top of the page). It contains your name,
- * a short bio, the "Download CV" button, and a large image on the right side.
- * 
- * HOW IT WORKS:
- * Uses Framer Motion's `staggerChildren` to make the big text ("AI-Powered", "Full-Stack", "Developer") 
- * slide up and un-blur one by one. It uses `useScroll` to create a Parallax effect on the image when you scroll down.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - Change the main text: Scroll down and find `<TextRepel text="AI-Powered" />`. Change the text prop.
- * - Change the button link/color: Find the `<a>` tag with "Download CV" and change the `href` or the Tailwind classes.
- * - Remove Parallax: If sir asks to stop the image from moving on scroll, remove `style={{ y }}` from the image container.
+ * Primary viewport with kinetic typography, parallax depth layers, and call-to-actions.
  */
 export function Hero({ isReady = true }: { isReady?: boolean }) {
   // Reference to the main container, used to track scrolling for the parallax effect.

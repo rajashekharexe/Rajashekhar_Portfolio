@@ -1,11 +1,6 @@
 /**
  * GitHubStats Component
- * 
- * WHAT IT DOES:
- * Renders the GitHubStats UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ * Live metrics and synchronized 365-day commit heatmap via GitHub API.
  */
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'

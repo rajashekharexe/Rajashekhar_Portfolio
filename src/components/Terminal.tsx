@@ -24,14 +24,8 @@ const BOOT_LINES: HistoryLine[] = [
 ]
 
 /**
- * COMMANDS Dictionary
- * 
- * WHAT IT DOES:
- * Stores every available command the user can type, and the array of text lines it returns.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * To add a new command, simply add it to this object. For example:
- * `hello: () => [{ type: 'success', text: 'Hello World!' }],`
+ * Commands Registry
+ * Configures available CLI commands and their formatted output streams.
  */
 const COMMANDS: Record<string, () => HistoryLine[]> = {
   help: () => [
@@ -116,9 +110,9 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'output',  text: '  Building production-grade web applications using AI agents,' },
     { type: 'output',  text: '  LLMs, React, Node.js and modern cloud infrastructure.' },
     { type: 'spacer',  text: '' },
-    { type: 'success', text: '  2021 → 2023' },
-    { type: 'output',  text: '  Computer Science Engineering — Undergraduate' },
-    { type: 'output',  text: '  Specialized in algorithms, systems, and ML fundamentals.' },
+    { type: 'success', text: '  Education' },
+    { type: 'output',  text: '  Bachelor of Computer Applications (BCA)' },
+    { type: 'output',  text: '  Specialized in Software Engineering, Web Systems & Modern AI Workflows.' },
     { type: 'spacer',  text: '' },
     { type: 'info',    text: '  ── KEY METRICS ─────────────────────────────────' },
     { type: 'output',  text: '  › 100% Attendance  ·  24/7 Builder Mentality' },
@@ -133,7 +127,7 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'success', text: '  📱  Phone    :  +91 6366052864' },
     { type: 'success', text: '  🐙  GitHub   :  github.com/rajashekharexe' },
     { type: 'success', text: '  💼  LinkedIn :  linkedin.com/in/rajashekhar-exe' },
-    { type: 'success', text: '  📸  Instagram:  @rajashekhar.exe' },
+    { type: 'success', text: '  📸  Instagram:  @rajashekhar.dev.exe' },
     { type: 'spacer',  text: '' },
     { type: 'info',    text: '  Available for freelance, full-time & collaborations.' },
     { type: 'spacer',  text: '' },

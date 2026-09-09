@@ -1,11 +1,5 @@
 /**
- * GLOBAL STYLESHEET
- * 
- * WHAT IT DOES:
- * Imports the core Tailwind CSS libraries and defines global styles for the entire website.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks "how did you hide the scrollbar?", point him to the `scrollbar-hide` and `html::-webkit-scrollbar` sections below.
+ * Global Stylesheet & Custom CSS Layering
  */
 @tailwind base;
 @tailwind components;

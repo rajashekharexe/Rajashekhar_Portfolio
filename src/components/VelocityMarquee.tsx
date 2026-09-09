@@ -1,11 +1,6 @@
 /**
  * VelocityMarquee Component
- * 
- * WHAT IT DOES:
- * Renders the VelocityMarquee UI component or visual effect.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - If sir asks to remove this specific feature entirely, the safest and easiest way is to go to src/App.tsx and comment out or remove its tag. Do not delete this file.
+ * Dynamic scroll-velocity linked typography ribbon with momentum skewing.
  */
 import { useRef, useState } from "react";
 import {

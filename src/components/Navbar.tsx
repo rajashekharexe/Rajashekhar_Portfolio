@@ -7,19 +7,8 @@ import { useSoundEffects } from '../hooks/useSoundEffects'
 const links = ['About', 'Skills', 'Projects', 'Experience', 'Contact']
 
 /**
- * Navbar
- * 
- * WHAT IT DOES:
- * A sticky navigation bar that stays at the top of the screen. It changes color (transparent to white)
- * when you scroll down, and hides itself when you scroll into the 3D Galaxy section.
- * 
- * HOW IT WORKS:
- * Uses Framer Motion's `useScroll` and `useMotionValueEvent` to track how far the user has scrolled.
- * It uses an IntersectionObserver to figure out which section is currently on screen to underline the active link.
- * 
- * INSTRUCTOR NOTE / HOW TO MODIFY:
- * - To add or remove links, just change the `links` array at the top of this file.
- * - To change the white background color when scrolled, look for `bg-white/90` and change it to `bg-black/90` (and adjust text colors accordingly).
+ * Navbar Component
+ * Adaptive sticky navigation header with dynamic backdrop transitions and intersection tracking.
  */
 export function Navbar({ isReady = true }: { isReady?: boolean }) {
   // isScrolled: true if the user scrolled past the hero section (triggers white background)
