@@ -41,13 +41,13 @@ I am passionate about designing systems and building clean, responsive web appli
 
 ## 🚀 Featured Technical Projects
 
-### 1. [Apex — AI-Powered Career Planning Platform](https://github.com/rajashekharexe)
+### 1. [Apex — AI-Powered Career Planning Platform](https://github.com/rajashekharexe/Apex)
 > **Stack:** Google Antigravity · React Three Fiber · TypeScript · LLM APIs (Gemini/OpenAI) · GSAP
 - Designed end-to-end system architecture and user experience for a 3D career roadmap platform that synthesizes adaptive 30-day technical curriculums via LLM APIs.
 - Built interactive 3D visual environments in React Three Fiber; tuned camera perspectives and geometry instancing to sustain locked 60 FPS performance.
 - Debugged complex asynchronous streaming responses and component state across 50+ iteration cycles.
 
-### 2. [KAD Multiplier (Soil Multiplier) — Full-Stack E-Commerce](https://github.com/rajashekharexe)
+### 2. [KAD Multiplier (Soil Multiplier) — Full-Stack E-Commerce](https://github.com/rajashekharexe/Soil-Multiplier-)
 > **Stack:** Firebase (Firestore, Authentication) · React · HTML5 · CSS3 · Tailwind CSS
 - Architected database schemas, security rules, and customer checkout flows for a live agricultural e-commerce application.
 - Configured real-time Cloud Firestore snapshot listeners to synchronize product catalogs and inventory levels across active sessions without manual reloads.
