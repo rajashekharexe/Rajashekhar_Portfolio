@@ -46,6 +46,7 @@ const projects: Project[] = [
     description: "Designed and deployed a personal portfolio featuring interactive WebGL particle systems, responsive canvas shaders, and a built-in terminal emulator. Achieved 95+ score on Google Lighthouse audits through aggressive code-splitting and asset compression.",
     tech: ["Google Antigravity", "React", "TypeScript", "Three.js", "Vite", "Framer Motion"],
     image: "/project-2.png",
+    gif: "/project-2.gif",
     link: "https://rajashekhar-portfolio-iota.vercel.app"
   }
 ]
@@ -198,11 +199,20 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
         <motion.h3 
           initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-          className="text-4xl md:text-[3.5rem] leading-none font-display font-black uppercase tracking-tight mb-2 text-neutral-900 flex flex-wrap"
+          className={`leading-none font-display font-black uppercase tracking-tight mb-2 text-neutral-900 whitespace-nowrap flex flex-nowrap ${
+            project.title.length > 14
+              ? 'text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.65rem]'
+              : 'text-3xl sm:text-4xl md:text-[3.25rem]'
+          }`}
         >
-          <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
+          <div className="overflow-hidden pb-2 w-full" style={{ perspective: 1000 }}>
             <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
-              <TextRepel text={project.title} radius={100} strength={35} />
+              <TextRepel 
+                text={project.title} 
+                radius={90} 
+                strength={30} 
+                className={`whitespace-nowrap flex-nowrap ${!isEven ? 'justify-end' : 'justify-start'}`}
+              />
             </motion.div>
           </div>
         </motion.h3>
