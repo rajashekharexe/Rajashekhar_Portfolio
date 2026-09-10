@@ -212,10 +212,10 @@ const ProjectRow = ({ project, index }: { project: Project, index: number }) => 
       >
         <span className="text-4xl font-display font-black text-neutral-300 mb-4 block">0{index + 1} //</span>
         <motion.h3 
-          initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }}
+          initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
           className={`leading-none font-display font-black uppercase tracking-tight mb-2 text-neutral-900 whitespace-nowrap flex flex-nowrap ${
-            project.title.length > 14
+            project.title.length >= 14
               ? 'text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.65rem]'
               : 'text-3xl sm:text-4xl md:text-[3.25rem]'
           }`}
