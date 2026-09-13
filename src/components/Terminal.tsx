@@ -37,6 +37,8 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'info',    text: '│  projects        │  Show all projects             │' },
     { type: 'info',    text: '│  experience      │  Work & education history     │' },
     { type: 'info',    text: '│  contact         │  Get in touch                 │' },
+    { type: 'info',    text: '│  resume          │  View resume link             │' },
+    { type: 'info',    text: '│  socials         │  List social & profile links  │' },
     { type: 'info',    text: '│  ai              │  AI-powered philosophy        │' },
     { type: 'info',    text: '│  ls              │  List portfolio sections      │' },
     { type: 'info',    text: '│  date            │  Show current date & time     │' },
@@ -131,6 +133,27 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'success', text: '  🌐  Portfolio:  rajashekhar-portfolio-iota.vercel.app' },
     { type: 'spacer',  text: '' },
     { type: 'info',    text: '  Available for Web Development & Full-Stack Internships.' },
+    { type: 'spacer',  text: '' },
+  ],
+
+  resume: () => [
+    { type: 'info',    text: '  ── RESUME & CREDENTIALS ────────────────────────' },
+    { type: 'spacer',  text: '' },
+    { type: 'success', text: '  📄 Resume (PDF):' },
+    { type: 'output',  text: '  https://rajashekhar-portfolio-iota.vercel.app/resume.pdf' },
+    { type: 'spacer',  text: '' },
+    { type: 'info',    text: '  Direct download link to official formatted PDF.' },
+    { type: 'spacer',  text: '' },
+  ],
+
+  socials: () => [
+    { type: 'info',    text: '  ── CONNECT & PROFILES ──────────────────────────' },
+    { type: 'spacer',  text: '' },
+    { type: 'success', text: '  🐙 GitHub    :  github.com/rajashekharexe' },
+    { type: 'success', text: '  💼 LinkedIn  :  linkedin.com/in/rajashekhar-exe' },
+    { type: 'success', text: '  📸 Instagram :  instagram.com/rajashekhar.dev.exe' },
+    { type: 'success', text: '  📧 Email     :  rajashekhar.exe@gmail.com' },
+    { type: 'success', text: '  📱 Phone     :  +91 6366052864' },
     { type: 'spacer',  text: '' },
   ],
 
