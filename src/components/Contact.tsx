@@ -128,6 +128,7 @@ export function Contact() {
                 <input
                   type="email"
                   required
+                  aria-label="Your email address"
                   value={senderEmail}
                   disabled={formState === 'loading'}
                   onChange={e => setSenderEmail(e.target.value)}
@@ -136,6 +137,7 @@ export function Contact() {
                 />
                 <textarea
                   required
+                  aria-label="Your message"
                   value={message}
                   disabled={formState === 'loading'}
                   onChange={e => setMessage(e.target.value)}
@@ -148,6 +150,7 @@ export function Contact() {
                     <button
                       type="submit"
                       disabled={formState === 'loading'}
+                      aria-label="Transmit message"
                       className="group flex items-center gap-4 text-2xl md:text-4xl font-display font-black text-white hover:text-neutral-300 transition-colors disabled:opacity-50"
                     >
                       {formState === 'loading' ? 'Opening...' : 'Transmit'}
@@ -171,35 +174,35 @@ export function Contact() {
             <div className="flex lg:flex-col gap-6 lg:gap-4 w-full justify-around lg:justify-start">
               {/* Email */}
               <MagneticButton>
-                <a href={`mailto:${MY_EMAIL}`} className="flex items-center gap-3 hover:text-white transition-colors group p-2">
+                <a href={`mailto:${MY_EMAIL}`} aria-label="Send email to Rajashekhar" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
                   <MailIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span className="hidden md:inline text-sm">{MY_EMAIL}</span>
                 </a>
               </MagneticButton>
               {/* Phone */}
               <MagneticButton>
-                <a href="tel:6366052864" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
+                <a href="tel:6366052864" aria-label="Call Rajashekhar at +91 6366052864" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
                   <PhoneIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span className="hidden md:inline">+91 6366052864</span>
                 </a>
               </MagneticButton>
               {/* GitHub */}
               <MagneticButton>
-                <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
+                <a href="https://github.com/rajashekharexe" target="_blank" rel="noopener noreferrer" aria-label="Rajashekhar on GitHub" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
                   <GithubIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span className="hidden md:inline">GitHub</span>
                 </a>
               </MagneticButton>
               {/* Instagram */}
               <MagneticButton>
-                <a href="https://www.instagram.com/rajashekhar.dev.exe/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
+                <a href="https://www.instagram.com/rajashekhar.dev.exe/" target="_blank" rel="noopener noreferrer" aria-label="Rajashekhar on Instagram" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
                   <InstagramIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span className="hidden md:inline">Instagram</span>
                 </a>
               </MagneticButton>
               {/* LinkedIn */}
               <MagneticButton>
-                <a href="https://www.linkedin.com/in/rajashekhar-exe/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
+                <a href="https://www.linkedin.com/in/rajashekhar-exe/" target="_blank" rel="noopener noreferrer" aria-label="Rajashekhar on LinkedIn" className="flex items-center gap-3 hover:text-white transition-colors group p-2">
                   <LinkedinIcon className="w-6 h-6 group-hover:scale-110 transition-transform" />
                   <span className="hidden md:inline">LinkedIn</span>
                 </a>

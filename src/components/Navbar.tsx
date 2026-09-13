@@ -57,6 +57,8 @@ export function Navbar({ isReady = true }: { isReady?: boolean }) {
 
   return (
     <motion.nav
+      role="navigation"
+      aria-label="Main navigation"
       initial={{ y: -20, opacity: 0 }}
       animate={isReady ? { y: 0, opacity: isGalaxy ? 0 : 1 } : { y: -20, opacity: 0 }}
       transition={{ duration: isGalaxy ? 0.5 : 0.8, ease: [0.16, 1, 0.3, 1], delay: isReady ? 0.5 : 0 }}
@@ -108,6 +110,8 @@ export function Navbar({ isReady = true }: { isReady?: boolean }) {
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="relative group block p-2"
+                aria-current={isActive ? 'page' : undefined}
+                aria-label={`Scroll to ${link} section`}
               >
                 {link}
                 {/* Hover underline */}
@@ -137,6 +141,7 @@ export function Navbar({ isReady = true }: { isReady?: boolean }) {
             href="https://github.com/rajashekharexe"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit Rajashekhar on GitHub"
             onMouseEnter={playHover}
             className="hidden sm:block hover:text-gray-300 transition-colors p-2"
           >
