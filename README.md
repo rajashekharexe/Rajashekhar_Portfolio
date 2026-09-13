@@ -71,8 +71,12 @@ I am passionate about designing systems and building clean, responsive web appli
    - Letter anchor coordinates are cached in `useRef`, eliminating repeated DOM layout recalculations (`getBoundingClientRect`).
 3. **Interactive Unix Terminal Shell (`Terminal.tsx`):**
    - In-browser bash emulator with command tokenizer, Tab autocomplete, history buffer (Up/Down navigation), and synthesized Web Audio acoustics.
+   - Built-in command suite (`whoami`, `skills`, `projects`, `experience`, `contact`, `resume`, `socials`, `ai`, `ls`, `date`, `clear`).
 4. **Real-Time GitHub Heatmap (`GitHubStats.tsx`):**
    - Dynamically pulls live contribution activity via REST API and re-chunks daily counts into a 52-week synchronized grid.
+5. **Accessibility & Responsive Performance:**
+   - Screen-reader accessible landmarks (`role="navigation"`, descriptive `aria-label` tags, `aria-current`).
+   - Touch-device hardware detection bypassing high-overhead cursor frames on mobile viewports.
 
 ---
 
