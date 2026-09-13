@@ -16,9 +16,13 @@ export function Cursor() {
 
   const [cursorType, setCursorType] = useState('default')
   const [isVisible, setIsVisible] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
 
   useEffect(() => {
-    if (window.matchMedia('(pointer: coarse)').matches) return
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      setIsTouch(true)
+      return
+    }
 
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX)
@@ -60,6 +64,7 @@ export function Cursor() {
     }
   }, [cursorX, cursorY])
 
+  if (isTouch) return null
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return null
 
   // Mix-blend-difference requires us to know if it's an icon state
