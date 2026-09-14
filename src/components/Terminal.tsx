@@ -117,8 +117,9 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'success', text: '  🎯 Academic Distinction in Computer Science — Class 12 (PUC)' },
     { type: 'output',  text: '  V B Darbar PU College (2024) — 95/100 in CS, 81% aggregate' },
     { type: 'spacer',  text: '' },
-    { type: 'success', text: '  📜 AI / Machine Learning Certification' },
-    { type: 'output',  text: '  Digital Dreams Institute, Vijayapura (2026)' },
+    { type: 'success', text: '  📜 Microsoft Certified: Azure AI Apps and Agents Developer Associate' },
+    { type: 'output',  text: '  Microsoft (Sep 2026) — Credential ID: BDA7BFE0C929AE66' },
+    { type: 'output',  text: '  AI/ML Training: Digital Dreams Institute, Vijayapura' },
     { type: 'spacer',  text: '' },
   ],
 

@@ -147,6 +147,13 @@ export function Experience() {
                 </div>
               </div>
               <div className="flex items-start gap-3">
+                <span className="text-cyan-600 font-black text-lg">📜</span>
+                <div>
+                  <strong className="text-neutral-900 font-bold">Microsoft Certified: Azure AI Apps & Agents Developer Associate</strong>
+                  <p className="text-neutral-500 text-xs md:text-sm">Credential ID: BDA7BFE0C929AE66 · Microsoft (Sep 2026)</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
                 <span className="text-blue-500 font-black text-lg">🎯</span>
                 <div>
                   <strong className="text-neutral-900 font-bold">Academic Distinction in Computer Science (95/100)</strong>

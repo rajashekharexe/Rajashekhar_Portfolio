@@ -85,8 +85,9 @@ I am passionate about designing systems and building clean, responsive web appli
 - **Bachelor of Computer Applications (BCA)** (2024 → Expected 2027)  
   *A S Patil College of Commerce (Autonomous), Vijayapura*  
   *Relevant Coursework:* Full Stack Development (REST APIs, Web Security), NoSQL Databases (MongoDB), Data Structures, Software Engineering (SDLC).
-- **AI / Machine Learning Certification** (2026)  
-  *Digital Dreams Institute, Vijayapura*
+- **Microsoft Certified: Azure AI Apps and Agents Developer Associate** (Sep 2026)  
+  *Microsoft* — Credential ID: `BDA7BFE0C929AE66`  
+  *AI/ML Training:* Digital Dreams Institute, Vijayapura
 - **Class 12 (PUC) — Computer Science Distinction (95/100)** (2024)  
   *V B Darbar PU College* — 81% aggregate score.
 
