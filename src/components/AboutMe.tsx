@@ -1,9 +1,10 @@
-import { Lanyard } from './Lanyard'
+import { lazy, Suspense, useRef } from 'react'
 import heroImage from '../assets/id_photo.png'
 import { TextRepel } from './TextRepel'
 import TextType from './TextType'
-import { useRef } from 'react'
 import { useInView, motion, useScroll, useTransform } from 'framer-motion'
+
+const Lanyard = lazy(() => import('./Lanyard').then(m => ({ default: m.Lanyard })))
 
 export function AboutMe() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,9 @@ export function AboutMe() {
         
         {/* Left side: 3D ID Card */}
         <motion.div style={{ y: cardY }} className="relative w-full md:w-1/2 flex justify-center h-[700px]">
-          <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} frontImage={heroImage} triggerSwing={isInView} />
+          <Suspense fallback={<div className="w-full h-full flex items-center justify-center" />}>
+            <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} frontImage={heroImage} triggerSwing={isInView} />
+          </Suspense>
         </motion.div>
         
         {/* Right side: Content */}

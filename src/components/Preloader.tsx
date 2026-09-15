@@ -16,6 +16,12 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
   useEffect(() => {
     window.scrollTo(0, 0)
 
+    // Remove static HTML initial vault curtain once React takes over
+    const initialVault = document.getElementById('initial-vault')
+    if (initialVault) {
+      initialVault.remove()
+    }
+
     const controls = animate(progress, 100, {
       duration: 2.8,
       ease: [0.16, 1, 0.3, 1],
@@ -33,7 +39,7 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
     <div className="fixed inset-0 z-[10000] pointer-events-none flex flex-col">
       {/* Top Half of the Vault */}
       <motion.div 
-        className="w-full h-[50vh] bg-black"
+        className="w-full h-[50.5vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: isDone ? "-100%" : 0 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}
@@ -41,7 +47,7 @@ export function Preloader({ onComplete, onStartExit }: { onComplete: () => void,
       
       {/* Bottom Half of the Vault */}
       <motion.div 
-        className="w-full h-[50vh] bg-black"
+        className="w-full h-[50.5vh] bg-black"
         initial={{ y: 0 }}
         animate={{ y: isDone ? "100%" : 0 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 0.5 }}

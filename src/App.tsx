@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { AboutMe } from './components/AboutMe'
@@ -36,6 +36,14 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [isReady, setIsReady] = useState(false)
 
+  const handleStartExit = useCallback(() => {
+    setIsReady(true)
+  }, [])
+
+  const handleComplete = useCallback(() => {
+    setLoading(false)
+  }, [])
+
   useEffect(() => {
     // Prevent Chrome from aggressively snapping down to previous scroll positions after reload
     if ('scrollRestoration' in window.history) {
@@ -60,7 +68,7 @@ function App() {
 
   return (
     <>
-      {loading && <Preloader onStartExit={() => setIsReady(true)} onComplete={() => setLoading(false)} />}
+      {loading && <Preloader onStartExit={handleStartExit} onComplete={handleComplete} />}
       <ScrollProgress />
       <Spotlight />
       <Cursor />
