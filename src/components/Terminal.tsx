@@ -38,6 +38,7 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'info',    text: '│  experience      │  Work & education history     │' },
     { type: 'info',    text: '│  contact         │  Get in touch                 │' },
     { type: 'info',    text: '│  resume          │  View resume link             │' },
+    { type: 'info',    text: '│  certs           │  Show verified credentials    │' },
     { type: 'info',    text: '│  socials         │  List social & profile links  │' },
     { type: 'info',    text: '│  ai              │  AI-powered philosophy        │' },
     { type: 'info',    text: '│  ls              │  List portfolio sections      │' },
@@ -157,6 +158,25 @@ const COMMANDS: Record<string, () => HistoryLine[]> = {
     { type: 'success', text: '  📱 Phone     :  +91 6366052864' },
     { type: 'spacer',  text: '' },
   ],
+
+  certs: () => [
+    { type: 'info',    text: '  ── VERIFIED CERTIFICATIONS & CREDENTIALS ───────' },
+    { type: 'spacer',  text: '' },
+    { type: 'success', text: '  📜 Microsoft Certified: Azure AI Apps & Agents Developer Associate' },
+    { type: 'output',  text: '     Issuer        :  Microsoft' },
+    { type: 'output',  text: '     Issue Date    :  September 2026' },
+    { type: 'output',  text: '     Credential ID :  BDA7BFE0C929AE66' },
+    { type: 'output',  text: '     Specialization:  AI/ML Training at Digital Dreams Institute' },
+    { type: 'spacer',  text: '' },
+    { type: 'success', text: '  🎯 Academic CS Distinction (95/100) — Class 12 (PUC)' },
+    { type: 'output',  text: '     Institution   :  V B Darbar PU College (2024)' },
+    { type: 'spacer',  text: '' },
+    { type: 'success', text: '  🏆 4th Place (out of 69 Teams) — IEEE AI Arena 2.0' },
+    { type: 'output',  text: '     Institution   :  BLDEA CET Vijayapura (Mar 2026)' },
+    { type: 'spacer',  text: '' },
+  ],
+
+  certifications: () => COMMANDS.certs(),
 
   ai: () => [
     { type: 'info',    text: '  ── AI-EMPOWERED DEVELOPMENT ─────────────────────' },
