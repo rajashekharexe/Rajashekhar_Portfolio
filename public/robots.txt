@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://rajashekhar-portfolio-iota.vercel.app/sitemap.xml
