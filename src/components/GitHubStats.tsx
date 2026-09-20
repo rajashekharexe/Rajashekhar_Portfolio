@@ -161,7 +161,7 @@ export function GitHubStats({ username = 'rajashekharexe' }: { username?: string
         {/* Top row: heading + CTA */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
           <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: false }}
+            initial="hidden" whileInView="visible" viewport={{ once: true }}
             variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
           >
             <h2 className="text-[2.5rem] md:text-[4rem] font-display font-black uppercase leading-[0.9] tracking-tight mb-2 text-neutral-900 flex flex-col items-start">

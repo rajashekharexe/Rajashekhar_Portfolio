@@ -7,9 +7,8 @@ import type { ReactNode } from 'react'
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   return (
-    // lerp 0.08 → smoother on high refresh rate monitors (144hz)
-    // syncTouch: native-speed touch, no added delay
-    <ReactLenis root options={{ lerp: 0.08, smoothWheel: true, syncTouch: false, touchMultiplier: 1.5 }}>
+    // lerp 0.1 → responsive and snappy without floaty scroll lag, while remaining silky smooth
+    <ReactLenis root options={{ lerp: 0.1, smoothWheel: true, syncTouch: true, wheelMultiplier: 1.0 }}>
       {children}
     </ReactLenis>
   )

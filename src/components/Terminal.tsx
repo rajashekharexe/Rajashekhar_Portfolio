@@ -319,7 +319,7 @@ export function Terminal() {
   return (
     <section className="py-24 px-8 bg-neutral-50/50 border-t border-neutral-100">
       <motion.div
-        initial="hidden" whileInView="visible" viewport={{ once: false }}
+        initial="hidden" whileInView="visible" viewport={{ once: true }}
         variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.1 } } }}
         className="text-center mb-12"
       >

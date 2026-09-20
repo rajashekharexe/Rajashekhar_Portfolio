@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion'
-import { useRef, useCallback, useEffect } from 'react'
+import { useRef, useCallback } from 'react'
 import { TextRepel } from './TextRepel'
 
 /**
@@ -23,29 +23,11 @@ export function Experience() {
   const mouseY = useMotionValue(-1000)
   const clipPath = useMotionTemplate`circle(150px at ${mouseX}px ${mouseY}px)`
 
-  // Cache the section's viewport rect — refresh on scroll/resize, NOT on mousemove
-  const rectRef = useRef({ left: 0, top: 0 })
-
-  const updateRect = useCallback(() => {
-    if (!containerRef.current) return
-    const r = containerRef.current.getBoundingClientRect()
-    rectRef.current = { left: r.left, top: r.top }
-  }, [])
-
-  useEffect(() => {
-    updateRect()
-    window.addEventListener('scroll', updateRect, { passive: true })
-    window.addEventListener('resize', updateRect, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', updateRect)
-      window.removeEventListener('resize', updateRect)
-    }
-  }, [updateRect])
-
-  // Hot path: only reads JS values — no DOM queries
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    mouseX.set(e.clientX - rectRef.current.left)
-    mouseY.set(e.clientY - rectRef.current.top)
+  // Hot path: only runs on mouse move over this section — zero scroll listeners
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseX.set(e.clientX - rect.left)
+    mouseY.set(e.clientY - rect.top)
   }, [mouseX, mouseY])
 
   const handleMouseLeave = useCallback(() => {
@@ -87,7 +69,7 @@ export function Experience() {
         {/* Left: Title */}
         <div className="lg:w-5/12">
           <motion.div
-            initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }}
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
             variants={{ hidden: { opacity: 0, y: 50, rotateX: 45 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
             className="origin-bottom"
           >

@@ -90,7 +90,7 @@ export function PhysicsPlayground() {
           className="absolute top-0 left-0 right-0 z-20 text-center pt-12 px-8 pointer-events-none"
         >
           <h2 className="text-[2.5rem] md:text-[4.5rem] font-display font-black uppercase leading-[0.85] tracking-tighter mb-4 text-white flex flex-col items-center">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: false }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="flex flex-col items-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="flex flex-col items-center">
               <div className="overflow-hidden pb-2" style={{ perspective: 1000 }}>
                 <motion.div variants={{ hidden: { y: "120%", rotateX: -90, opacity: 0 }, visible: { y: "0%", rotateX: 0, opacity: 1, transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] } } }} style={{ transformOrigin: "top center" }}>
                   <TextRepel text="Tech"     radius={100} strength={35} className="text-white" />

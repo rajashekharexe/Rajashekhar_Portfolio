@@ -129,8 +129,7 @@ function RepelLetter({
         const t5 = setTimeout(readPos, 1900);
         const t6 = setTimeout(readPos, 2600);
 
-        // 3. Refresh cache on scroll, resize, and on-demand container sync
-        window.addEventListener("scroll", readPos, { passive: true });
+        // 3. Refresh cache on resize and on-demand container sync (document coords are stable on scroll)
         window.addEventListener("resize", readPos, { passive: true });
         window.addEventListener("text-repel-sync", readPos, { passive: true });
 
@@ -146,7 +145,6 @@ function RepelLetter({
             clearTimeout(t6);
             unsub1();
             unsub2();
-            window.removeEventListener("scroll", readPos);
             window.removeEventListener("resize", readPos);
             window.removeEventListener("text-repel-sync", readPos);
         };

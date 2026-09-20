@@ -9,6 +9,7 @@ const Lanyard = lazy(() => import('./Lanyard').then(m => ({ default: m.Lanyard }
 export function AboutMe() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+  const isLanyardInView = useInView(containerRef, { margin: "300px" });
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -24,7 +25,7 @@ export function AboutMe() {
         {/* Left side: 3D ID Card */}
         <motion.div style={{ y: cardY }} className="relative w-full md:w-1/2 flex justify-center h-[700px]">
           <Suspense fallback={<div className="w-full h-full flex items-center justify-center" />}>
-            <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} frontImage={heroImage} triggerSwing={isInView} />
+            <Lanyard position={[0, 0, 13]} gravity={[0, -40, 0]} frontImage={heroImage} triggerSwing={isInView} inView={isLanyardInView} />
           </Suspense>
         </motion.div>
         

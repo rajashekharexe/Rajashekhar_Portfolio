@@ -50,8 +50,6 @@ const DotField = memo(({
   // Mouse position IN canvas coordinates (viewport-relative, updated every move)
   const mouseRef  = useRef({ x: -9999, y: -9999 })
 
-  // Canvas's top-left in the viewport — updated on scroll/resize, NOT on mousemove
-  const originRef = useRef({ left: 0, top: 0 })
 
   const rafRef    = useRef<number | null>(null)
   const sizeRef   = useRef({ w: 0, h: 0 })
@@ -82,14 +80,7 @@ const DotField = memo(({
       canvas!.style.height = `${h}px`
       ctx!.setTransform(1, 0, 0, 1, 0, 0)
       sizeRef.current   = { w, h }
-      originRef.current = { left: r.left, top: r.top }
       buildDots(w, h)
-    }
-
-    // Refresh canvas origin on scroll (cheap: no canvas re-draw)
-    function updateOrigin() {
-      const r = parent.getBoundingClientRect()
-      originRef.current = { left: r.left, top: r.top }
     }
 
     function buildDots(w: number, h: number) {
@@ -114,10 +105,11 @@ const DotField = memo(({
 
     /* ── Mouse ──────────────────────────────────────────────────────────── */
     function onMouseMove(e: MouseEvent) {
-      // Convert viewport coords → canvas coords using cached origin (no DOM read)
+      if (!isVisible) return
+      const r = parent.getBoundingClientRect()
       mouseRef.current = {
-        x: e.clientX - originRef.current.left,
-        y: e.clientY - originRef.current.top,
+        x: e.clientX - r.left,
+        y: e.clientY - r.top,
       }
     }
 
@@ -224,9 +216,7 @@ const DotField = memo(({
     const ioObs = new IntersectionObserver(([entry]) => { isVisible = entry.isIntersecting }, { rootMargin: '200px' })
     ioObs.observe(parent)
 
-    // Update canvas origin on scroll — cheap, just reads getBoundingClientRect once
-    window.addEventListener('scroll',   updateOrigin, { passive: true })
-    window.addEventListener('resize',   updateOrigin, { passive: true })
+    window.addEventListener('resize',   doResize, { passive: true })
     window.addEventListener('mousemove', onMouseMove, { passive: true })
     // Reset when mouse leaves the parent element
     parent.addEventListener('mouseleave', onMouseLeave)
@@ -237,8 +227,7 @@ const DotField = memo(({
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       resizeObs.disconnect()
       ioObs.disconnect()
-      window.removeEventListener('scroll',    updateOrigin)
-      window.removeEventListener('resize',    updateOrigin)
+      window.removeEventListener('resize',    doResize)
       window.removeEventListener('mousemove', onMouseMove)
       parent.removeEventListener('mouseleave', onMouseLeave)
     }

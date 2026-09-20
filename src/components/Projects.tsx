@@ -340,7 +340,7 @@ export function Projects() {
       <div className="max-w-[1400px] mx-auto px-8 relative z-10">
         <div className="mb-32 md:mb-48">
           <motion.h2
-            initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-100px" }}
+            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
             variants={{ hidden: { opacity: 0, y: 50, rotateX: 45 }, visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.1 } } }}
             className="text-[4rem] md:text-[6rem] leading-[0.85] font-display font-black uppercase tracking-tighter origin-bottom text-neutral-900 flex flex-col items-start"
           >

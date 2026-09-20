@@ -55,6 +55,7 @@ interface LanyardProps {
   lanyardImage?: string | null;
   lanyardWidth?: number;
   triggerSwing?: boolean;
+  inView?: boolean;
 }
 
 export function Lanyard({
@@ -66,7 +67,8 @@ export function Lanyard({
   backImage = null,
   imageFit = 'cover',
   lanyardWidth = 1,
-  triggerSwing = false
+  triggerSwing = false,
+  inView = true
 }: LanyardProps) {
   const [isMobile, setIsMobile] = useState<boolean>(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
@@ -79,9 +81,10 @@ export function Lanyard({
   return (
     <div className="lanyard-wrapper">
       <Canvas
+        frameloop={inView ? 'always' : 'never'}
         camera={{ position, fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
+        gl={{ alpha: transparent, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />

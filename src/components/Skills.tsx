@@ -130,7 +130,7 @@ export function Skills() {
                 Skills
               </p>
               <motion.h2 
-                initial="hidden" whileInView="visible" viewport={{ once: false, margin: "-50px" }}
+                initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
                 variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
                 className="text-[3.5rem] md:text-[4.5rem] leading-[0.85] font-display font-black uppercase tracking-tighter mb-2 text-black flex flex-col items-start"
               >

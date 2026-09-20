@@ -16,27 +16,44 @@ export function Spotlight() {
     let targetY = -1000
     let currentX = -1000
     let currentY = -1000
-
-    const updateMousePosition = (e: MouseEvent) => {
-      targetX = e.clientX
-      targetY = e.clientY
-    }
+    let isRunning = false
 
     const loop = () => {
+      const dx = targetX - currentX
+      const dy = targetY - currentY
+
+      // Idle cutoff: if distance is negligible, snap to target and pause loop
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        currentX = targetX
+        currentY = targetY
+        if (spotlightRef.current) {
+          spotlightRef.current.style.transform = `translate3d(${currentX - 350}px, ${currentY - 350}px, 0)`
+        }
+        isRunning = false
+        return
+      }
+
       // Linear interpolation (lerp) for smooth trailing
-      currentX += (targetX - currentX) * 0.15
-      currentY += (targetY - currentY) * 0.15
+      currentX += dx * 0.15
+      currentY += dy * 0.15
       
       if (spotlightRef.current) {
-        // Direct DOM manipulation + translate3d bypasses React render and utilizes GPU acceleration
         spotlightRef.current.style.transform = `translate3d(${currentX - 350}px, ${currentY - 350}px, 0)`
       }
       
       animationFrameId = requestAnimationFrame(loop)
     }
 
-    window.addEventListener('mousemove', updateMousePosition)
-    loop()
+    const updateMousePosition = (e: MouseEvent) => {
+      targetX = e.clientX
+      targetY = e.clientY
+      if (!isRunning) {
+        isRunning = true
+        animationFrameId = requestAnimationFrame(loop)
+      }
+    }
+
+    window.addEventListener('mousemove', updateMousePosition, { passive: true })
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition)
