@@ -122,10 +122,17 @@ export function Experience() {
             {/* Timeline / Highlights */}
             <div className="space-y-4 mb-8 relative z-10 text-sm md:text-base">
               <div className="flex items-start gap-3">
+                <span className="text-slate-400 font-black text-lg">🥈</span>
+                <div>
+                  <strong className="text-neutral-900 font-bold">2nd Place (Runner-Up) — IEEE GAMEATHON</strong>
+                  <p className="text-neutral-500 text-xs md:text-sm">Engineered an interactive game prototype using AI at IEEE BLDEACET Student Branch (Sep 2026); awarded for exceptional creativity, mechanics design, and technical execution.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
                 <span className="text-amber-500 font-black text-lg">🏆</span>
                 <div>
                   <strong className="text-neutral-900 font-bold">4th Place (out of 69 Teams) — IEEE AI Arena 2.0</strong>
-                  <p className="text-neutral-500 text-xs md:text-sm">Built and shipped an AI educational web app under hackathon constraints; judged in the top 6% on architecture and UX.</p>
+                  <p className="text-neutral-500 text-xs md:text-sm">Built and shipped an AI educational web app under hackathon constraints; judged in the top 6% on architecture and UX (Mar 2026).</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

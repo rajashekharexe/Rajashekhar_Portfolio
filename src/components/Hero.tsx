@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { TextRepel } from './TextRepel'
+import { AmbientHeroOrbs } from './AmbientHeroOrbs'
 
 /**
  * Hero Section
@@ -19,6 +20,9 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
   return (
     <section id="about" ref={containerRef} className="relative min-h-screen bg-background pt-14 pb-4 px-8 overflow-hidden flex flex-col justify-start">
+      {/* Ambient Physics Glass Orbs */}
+      <AmbientHeroOrbs />
+
       <div className="max-w-[1400px] w-full mx-auto relative flex-1 flex items-start pt-2">
         
         {/* The Image (Centered / slightly pulled right, behind text) */}
@@ -124,7 +128,7 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
               }}
             >
               <p className="text-sm font-medium text-black max-w-[340px] mb-3 leading-relaxed">
-                Final-year BCA student architecting scalable database schemas, responsive UI workflows, and modern 3D WebGL experiences. Winner of 4th place at IEEE AI Arena 2.0.
+                Final-year BCA student architecting scalable database schemas, responsive UI workflows, and modern 3D WebGL experiences. 2nd Place Winner at IEEE GAMEATHON.
               </p>
               <div className="flex items-center flex-wrap gap-6 text-black font-semibold text-sm">
                 <a 
