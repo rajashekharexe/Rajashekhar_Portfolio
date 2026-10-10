@@ -1,13 +1,46 @@
-import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { TextRepel } from './TextRepel'
-
-const SkillsTerrarium = lazy(() => import('./SkillsTerrarium'))
 
 const PURPLE = '#6366F1'
 const GREEN  = '#22C55E'
 const ORANGE = '#F97316'
 const BLUE   = '#2563EB'
+
+/**
+ * AIWidget
+ * Animated SVG gyroscope and telemetry heartbeat indicator.
+ */
+function AIWidget() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="relative w-full h-full min-h-[160px] rounded-2xl border border-neutral-200 bg-neutral-50 overflow-hidden flex items-center justify-center shadow-sm"
+    >
+       {/* Animated geometric rings */}
+       <motion.div animate={{ rotate: 360 }} transition={{ duration: 24, repeat: Infinity, ease: "linear" }} className="absolute w-[220px] h-[220px] border border-dashed border-neutral-300 rounded-full" />
+       <motion.div animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} className="absolute w-[150px] h-[150px] border border-neutral-300 rounded-full" />
+       <motion.div animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} className="absolute w-[90px] h-[90px] border border-dashed border-neutral-300 rounded-full opacity-50" />
+       
+       {/* Glowing Core */}
+       <div className="absolute w-12 h-12 bg-black rounded-full flex items-center justify-center shadow-xl z-10">
+         <motion.div animate={{ scale: [1, 1.7, 1], opacity: [0.6, 0, 0.6] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }} className="absolute inset-0 bg-black rounded-full" />
+         <span className="text-white text-xs font-black tracking-widest relative z-10">AI</span>
+       </div>
+
+       {/* System Status overlay */}
+       <div className="absolute bottom-3 left-4 bg-white/80 backdrop-blur-sm px-2.5 py-1.5 rounded-lg border border-neutral-100 shadow-sm">
+         <div className="text-[8px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-1">System Core</div>
+         <div className="text-[9.5px] font-bold text-green-600 flex items-center gap-1.5 leading-none">
+           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+           Optimal
+         </div>
+       </div>
+    </motion.div>
+  )
+}
 
 /* ── Skill badge chip ────────────────────────────────────────── */
 function Badge({ name, color }: { name: string; color: string }) {
@@ -123,17 +156,9 @@ export function Skills() {
               </p>
             </div>
             
-            {/* Right: Skills 3D Physics Terrarium */}
-            <div className="w-full md:w-[320px] lg:w-[360px] shrink-0">
-              <Suspense
-                fallback={
-                  <div className="w-full h-[320px] rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-500 font-mono text-xs">
-                    Initializing Physics Terrarium...
-                  </div>
-                }
-              >
-                <SkillsTerrarium />
-              </Suspense>
+            {/* Right: AI Widget */}
+            <div className="w-full md:w-[280px] shrink-0">
+              <AIWidget />
             </div>
           </div>
 

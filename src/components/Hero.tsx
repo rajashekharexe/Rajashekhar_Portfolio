@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { TextRepel } from './TextRepel'
-import { AmbientHeroOrbs } from './AmbientHeroOrbs'
 
 /**
  * Hero Section
@@ -20,9 +19,6 @@ export function Hero({ isReady = true }: { isReady?: boolean }) {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
   return (
     <section id="about" ref={containerRef} className="relative min-h-screen bg-background pt-14 pb-4 px-8 overflow-hidden flex flex-col justify-start">
-      {/* Ambient Physics Glass Orbs */}
-      <AmbientHeroOrbs />
-
       <div className="max-w-[1400px] w-full mx-auto relative flex-1 flex items-start pt-2">
         
         {/* The Image (Centered / slightly pulled right, behind text) */}
